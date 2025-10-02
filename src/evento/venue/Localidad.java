@@ -1,5 +1,12 @@
 package evento.venue;
 
-public class Localidad {
+import java.time.LocalDate;
+
+import evento.Evento;
+
+public abstract class Localidad {
+	
+	
+	
 
 }

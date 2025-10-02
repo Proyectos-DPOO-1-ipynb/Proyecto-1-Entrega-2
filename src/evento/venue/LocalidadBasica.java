@@ -1,5 +1,16 @@
 package evento.venue;
 
-public class LocalidadBasica {
+import java.util.ArrayList;
+import java.util.List;
+
+import evento.Evento;
+
+public class LocalidadBasica extends Localidad {
+	
+	
+	
+	
+	
+	
 
 }
