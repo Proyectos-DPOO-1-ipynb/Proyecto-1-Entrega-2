@@ -34,12 +34,9 @@ public class Evento {
 		this.idEvento = idEvento;
 		this.venueAsignado = venueAsignado;
 		this.organizadorAsignado = organizadorAsignado;
-		
-		
+
 
 	}
-	
-	
 	
 
 }

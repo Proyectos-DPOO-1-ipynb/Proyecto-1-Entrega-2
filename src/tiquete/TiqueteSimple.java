@@ -9,22 +9,21 @@ import evento.venue.Localidad;
 public class TiqueteSimple extends Tiquete {
 	
 	
-	private Evento evento;
-	private Localidad localidad;
+	private LocalDate fecha;
+	private int hora;
 	
-	private LocalDateTime fecha;
+	private Evento eventoAsociado;
+	private Localidad localidadTiquete;
 	
-	
-	public TiqueteSimple(String idTiquete, double precio, Evento evento, Localidad localidad, LocalDateTime fecha) {
+	public TiqueteSimple(String idTiquete, double precio, LocalDate fecha, int hora, Evento eventoAsociado,
+			Localidad localidadTiquete) {
 		
 		super(idTiquete, precio);
-		
-		this.evento = evento;
-		this.localidad = localidad;
-		
 		this.fecha = fecha;
-		
+		this.hora = hora;
+		this.eventoAsociado = eventoAsociado;
+		this.localidadTiquete = localidadTiquete;
 	}
 	
-
+	
 }
