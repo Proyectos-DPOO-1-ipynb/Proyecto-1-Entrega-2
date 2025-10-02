@@ -1,2 +1,5 @@
-/tiquete/
-/evento/
+/bin/
+/.settings/
+/.classpath
+/.project
+/target/
