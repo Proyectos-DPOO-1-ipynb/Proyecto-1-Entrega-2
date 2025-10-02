@@ -15,7 +15,7 @@ public class EmisorTiquetes {
 	private static Set<String> codigos = new HashSet<>();
 	
 	
-	public static Tiquete generarTiqueteSimple(Evento evento, Localidad localidad, double precio, LocalDateTime fecha, int hora) {
+	public static Tiquete generarTiqueteSimple(Evento evento, Localidad localidad, double precio, LocalDate fecha, int hora) {
 		
 		String codigo;
 		
@@ -32,13 +32,13 @@ public class EmisorTiquetes {
        
         codigos.add(codigo);
 		
-		return new TiqueteSimple(codigo, precio, evento, localidad, fecha);
+		return new TiqueteSimple(codigo, precio, fecha, hora, evento, localidad);
 		
 	}
 	
 	
 	
-	public static Tiquete generarTiqueteNumerado(Evento evento, Localidad localidad, double precio, LocalDateTime fecha, String idAsiento) {
+	public static Tiquete generarTiqueteNumerado(Evento evento, Localidad localidad, double precio, LocalDate fecha, int hora, String idAsiento) {
 		
 		String codigo;
 		
@@ -55,7 +55,7 @@ public class EmisorTiquetes {
        
         codigos.add("N" + codigo);
 		
-		return new TiqueteNumerado("N" + codigo, precio, evento, localidad, fecha, idAsiento);
+		return new TiqueteNumerado("N" + codigo, precio, fecha, hora, evento, localidad, idAsiento);
 	
 	
 	
