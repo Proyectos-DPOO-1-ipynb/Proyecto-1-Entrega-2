@@ -10,7 +10,6 @@ public class TiqueteEntradaMultipleLugar extends TiqueteCompuesto {
 	
 	public TiqueteEntradaMultipleLugar(String idTiquete, double precio, List<TiqueteSimple> tiquetes, Localidad idLugar) {
 		super(idTiquete, precio, tiquetes);
-		// TODO Auto-generated constructor stub
 		this.idLugar = idLugar;
 	}
 	
