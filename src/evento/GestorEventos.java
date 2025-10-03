@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evento.venue.Localidad;
+import evento.venue.LocalidadBasica;
 import evento.venue.LocalidadNumerada;
 import evento.venue.Venue;
 import usuario.Administrador;
@@ -13,9 +14,10 @@ import usuario.comprador.Organizador;
 public class GestorEventos {
 	
 	
-	public static String proponerVenue(Organizador organizador,String VenueId,  String direccion, int maxCapacidad, List<String> restricciones) {
+	public static String proponerVenue(Organizador organizador,String VenueId,  String direccion, int maxCapacidad, 
+			List<String> restricciones) throws Exception {
 		
-		Venue propuesta = new Venue(VenueId, direccion, maxCapacidad, restricciones, false);
+		Venue propuesta = new Venue(VenueId, direccion, maxCapacidad, restricciones);
 		
 		propuesta.addPropuestaVenue();
 		
@@ -59,14 +61,45 @@ public class GestorEventos {
 		Evento eventoNuevo = new Evento(tipo, fecha, hora, idEvento, venue, organizador);
 		eventoNuevo.addEventoBorrador();
 		
-		return "Se ha creado el siguiente evento:" + eventoNuevo.getIdEvento();
+		return "Se ha creado el siguiente evento en borrador:" + eventoNuevo.getIdEvento();
 			
 			
 		}
 	
 	
+	public static String asociarLocalidadBasica(String idLocalidad, double precio, Evento eventoAsociado, int capacidad) throws Exception {
+		
+	
+			
+		LocalidadBasica localidadprop = new LocalidadBasica(idLocalidad, precio, eventoAsociado, capacidad);
+			
+		eventoAsociado.agregarLocalidad(localidadprop);
+				
+		return "La localidad con id: " + localidadprop.getIdLocalidad() + " fue añadida al evento con id " + eventoAsociado.getIdEvento();
+	}
+	
+	
+	
+	
+	public static String asociarLocalidadNumerada(String idLocalidad, double precio, Evento eventoAsociado, List<String> asientos) throws Exception {
+		
+		
+		
+		LocalidadNumerada localidadprop = new LocalidadNumerada(idLocalidad, precio, eventoAsociado, asientos);
+			
+		eventoAsociado.agregarLocalidad(localidadprop);
+				
+		return "La localidad con id: " + localidadprop.getIdLocalidad() + " fue añadida al evento con id " + eventoAsociado.getIdEvento();
+	}
+	
+	
+	
+	
+	
 	public static List<String> validarEvento(Evento evento) {
 		
+		
+		int capacidadnom = 0;
 		
 		List<String> problemas = new ArrayList<>();
 		
@@ -75,28 +108,40 @@ public class GestorEventos {
 			
 			problemas.add("Venue no aprobado");
 			
-		} else if (evento.getVenueAsignado().buscarDisponibilidad(evento.getFecha())==false) {
+		} if (evento.getVenueAsignado().buscarDisponibilidad(evento.getFecha())==false) {
 			
 			problemas.add("Venue no disponible");
 			
-		} else if(evento.getLocalidades().size() == 0) {
+		}  if(evento.getLocalidades().size() == 0) {
 			
 			
 			problemas.add("No hay localidades asignadas");
 			
 			
-		} else {
+		} //Se puede considerar que la siguiente funcinalidad quede incrustada en el constructor de LocalidadNumerada
 			
 			List<Localidad> localidadese = evento.getLocalidades();
 			
 			for(Localidad loc:localidadese) {
 				
+				
+				if(loc.getTipo().equals("BASICA")) {
+					
+					LocalidadBasica local = (LocalidadBasica) loc;
+					
+					capacidadnom += local.getCuposTotales();
+				}
+				
+				
+				
 				if(loc.getTipo().equals("NUMERADA")) {
 				
 					LocalidadNumerada local = (LocalidadNumerada) loc;
 					
-					List<String> asientoscontrol = local.getAsientosTotales();
-					List<String> asientos = local.getAsientosTotales();
+					capacidadnom += local.getAsientosTotales().size();
+					
+					List<String> asientoscontrol = new ArrayList<>(local.getAsientosTotales());
+					List<String> asientos = new ArrayList<>(local.getAsientosTotales());
 					
 					for(String asiento:asientoscontrol) {
 						
@@ -111,10 +156,15 @@ public class GestorEventos {
 					}	
 				}
 				
-				break;
+				
 			}
 			
-		}
+			if(capacidadnom > evento.getVenueAsignado().getMaxCapacidad()) {
+				
+				problemas.add("Los cupos de las localidades superan la capacidad del venue");
+			}
+			
+		
 		
 		return problemas;	
 		
@@ -122,22 +172,28 @@ public class GestorEventos {
 	}
 	
 	
-	public static String publicarEvento(Evento evento) {
+	public static String publicarEvento(Evento evento) throws Exception {
 		
 		
 		if(validarEvento(evento).size() == 0) {
 			
 			evento.cambiarEstado();
-			evento.getVenueAsignado().addEventotoVenue(evento);
 			
+			if(evento.getEstado().equals("PUBLICADO")) {
+				
+				return "Ha sido publicado el siguiente evento: " + evento.getIdEvento();
 			
+			} else {
+				
+				return "Intente nuevamente";
+				
+			}
 			
+		} else {
+			
+			return "El evento no ha sido publicado, pues ha fallado la validación";
 		}
-		
-		return "Ha sido publicado el siguiente evento: " + evento.getIdEvento();
-		
-		
-		
+			
 	}
 		
 		

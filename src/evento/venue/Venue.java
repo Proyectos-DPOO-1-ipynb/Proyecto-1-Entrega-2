@@ -15,20 +15,27 @@ public class Venue {
 	private List<String> restricciones;
 	private boolean estado; //false, si no ha sido aprobado
 	
-	private List<Evento> eventosAsociados;
+	private List<Evento> eventosAsociados = new ArrayList<>();
 	
 	
 	private static List<Venue> VenuesAprobados = new ArrayList<>(); 
 	private static List<Venue> VenuesPendientes = new ArrayList<>();
 	
 	
-	public Venue(String VenueId, String direccion, int maxCapacidad, List<String> restricciones, boolean estado){
+	public Venue(String VenueId, String direccion, int maxCapacidad, List<String> restricciones) throws Exception{
+		
+		if (maxCapacidad <= 0) {
+			
+			throw new Exception("La capacidad no puede ser negativa ni nula");
+			
+		}
+		
 		
 		this.VenueId = VenueId;
 		this.direccion = direccion;
 		this.maxCapacidad = maxCapacidad;
 		this.restricciones = restricciones;
-		this.estado = estado;
+		this.estado = false;
 		
 	}
 
@@ -75,15 +82,34 @@ public class Venue {
 
 
 
-	public void cambiarEstadoAprobado() {
+	public void cambiarEstadoAprobado() throws Exception {
+		
+		if(this.estado == true) {
+			
+			throw new Exception("YUa se encuentra aprobado");
+			
+		}
 		
 		this.estado = true;
 		VenuesAprobados.add(this);
+		VenuesPendientes.remove(this);
 	}
 	
 	
 	
-	public void addPropuestaVenue() {
+	public void addPropuestaVenue() throws Exception {
+		
+		if(this.estado == true) {
+			throw new Exception("Ya fue aprobado! No hay necesidad de proponerlo otra vez");
+			
+		}
+		
+		if(VenuesPendientes.contains(this)) {
+			
+			throw new Exception("Ya está siendo considerado este venue para su aprobación");
+		
+			
+		}
 		
 		VenuesPendientes.add(this);
 		 
@@ -111,7 +137,19 @@ public class Venue {
 	}
 	
 	
-	public void addEventotoVenue(Evento evento) {
+	public void addEventotoVenue(Evento evento) throws Exception {
+		
+		if(!evento.getVenueAsignado().getVenueId().equals(this.getVenueId())) {
+		
+			throw new Exception("Estás tratando de formalizar un venue que no corresponde al borrador de este evento");
+			
+		}
+		
+		if(eventosAsociados.contains(evento)) {
+			throw new Exception("El evento ya está registrado en este venue");
+			
+		}
+		
 		
 		this.eventosAsociados.add(evento);
 		

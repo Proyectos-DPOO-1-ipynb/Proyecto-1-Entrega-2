@@ -35,6 +35,7 @@ public class Evento {
 	
 	
 	private static List<Evento> eventosBorrador = new ArrayList<>();
+	private static List<Evento> eventosPublicados = new ArrayList<>();
 	
 	
 	public Evento(String tipo, LocalDate fecha, int hora, String idEvento, Venue venueAsignado, Organizador organizadorAsignado) {
@@ -64,6 +65,16 @@ public class Evento {
 	
 
 
+	public String getEstado() {
+		return Estado;
+	}
+
+
+	public int getHora() {
+		return hora;
+	}
+
+
 	public List<Localidad> getLocalidades() {
 		return localidades;
 	}
@@ -79,21 +90,36 @@ public class Evento {
 	}
 	
 	
-	public void addEventoBorrador() {
+	public void addEventoBorrador() throws Exception {
 		
+		if(eventosBorrador.contains(this)) {
+			
+			throw new Exception("Ya este evento está en borrador");
+			
+		}
 		eventosBorrador.add(this);
 		
 	}
 	
 	
 	
-	public void agregarLocalidad(Localidad localidad) {
-		
-		this.localidades.add(localidad);
+	public void agregarLocalidad(Localidad localidad) throws Exception {
 		
 		
+		String idlocal = localidad.getIdLocalidad();
 		
+		for(Localidad localidads:this.localidades) {
+			
+			if(idlocal.equals(localidads.getIdLocalidad())) {
+			
+			throw new Exception("Ese id ya está registrado. Pruebe otro");
+			
+		}
+		}
+		
+		this.localidades.add(localidad);	
 	}
+	
 	
 	public void removerLocalidad(Localidad localidad) {
 		
@@ -102,10 +128,24 @@ public class Evento {
 	}
 	
 	
-	public void cambiarEstado() {
+	public void cambiarEstado() throws Exception {
+		
+		
+		if (eventosPublicados.contains(this)) {
+			
+			throw new Exception("Este evento ya fue publicado");
+			
+		} 
+		
+		
+		
+		
+		
+		this.getVenueAsignado().addEventotoVenue(this);
 		
 		this.Estado = "PUBLICADO";
-		
+		eventosBorrador.remove(this);
+		eventosPublicados.add(this);
 	}
 	
 	

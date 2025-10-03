@@ -16,9 +16,24 @@ public class LocalidadNumerada extends Localidad {
 	private List<Tiquete> tiquetes = new ArrayList<>();
 
 	
-	public LocalidadNumerada(String idLocalidad, double precio, Evento eventoAsociado, List<String> asientos) {
+	public LocalidadNumerada(String idLocalidad, double precio, Evento eventoAsociado, List<String> asientos) throws Exception {
 		
 		super(idLocalidad, precio, eventoAsociado, "NUMERADA");
+		
+		if(asientos == null) {
+			
+			throw new Exception("Inserte bien la lista de asientos");
+			
+		}
+		
+		if(asientos.isEmpty()) {
+			
+			throw new Exception("No puede tener un catálogo de asientos vacío");
+		}
+		
+
+		
+		
 		this.asientosTotales = asientos;
 		
 	}

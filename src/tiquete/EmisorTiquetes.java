@@ -17,8 +17,14 @@ public class EmisorTiquetes {
 	private static Set<String> codigos = new HashSet<>();
 	
 	
-	public static List<TiqueteSimple> generarTiqueteSimple(Evento evento, Localidad localidad, LocalDate fecha, int hora,
-			int cantidad) throws Exception {
+	public static List<TiqueteSimple> generarTiqueteSimple(Evento evento, Localidad localidad,int cantidad) throws Exception {
+		
+		
+		if(cantidad <= 0) {
+			
+			throw new Exception("No se ha especificado un número de tiquetes");
+			
+		}
 		
 		
 		List<TiqueteSimple> generados = new ArrayList<>();
@@ -64,7 +70,7 @@ public class EmisorTiquetes {
 	       
 	        codigos.add(codigo);
 			
-			TiqueteSimple tiket = new TiqueteSimple(codigo, local.getPrecio(), fecha, hora, evento, localidad);
+			TiqueteSimple tiket = new TiqueteSimple(codigo, local.getPrecio(), evento.getFecha(), evento.getHora(), evento, localidad);
 			evento.addTiqueteSimple(tiket);
 			local.addTiqueteSimple(tiket);
 			generados.add(tiket);
@@ -81,68 +87,74 @@ public class EmisorTiquetes {
 	
 	
 	
-	public static List<TiqueteNumerado> generarTiqueteNumerado(Evento evento, Localidad localidad, LocalDate fecha, 
-			int hora, List<String> asientos) throws Exception {
+	public static List<TiqueteNumerado> generarTiqueteNumerado(Evento evento, Localidad localidad, List<String> asientos) throws Exception {
 		
-		
-		List<TiqueteNumerado> generados = new ArrayList<>();
-		
-		if(localidad.verificadorAsociacionEvento(evento) != true) {
-			
-			throw new Exception("La localidad no está asociada al evento ingresado por parámetro");
-			
-		}
-		
-		if(localidad.getTipo().equals("BASICA")) {
-			
-			throw new Exception("Si la localidad es básica, se deben generar tiquetes simples solamente");
-		}
-		
-		
-		LocalidadNumerada local = (LocalidadNumerada) localidad;
-		
-		for(String asiento:asientos) {
-			
-			if(local.asientoLibre(asiento) != false) {
-				
-				throw new Exception("El asiento "+ asiento + "no está libre");
-				
-			}			
-		}
-		
-		local.reservarAsientos(asientos);
-		
-		
-		
-		for(String asiento:asientos) {
-		
-			String codigo;
-			
-	    	int numero = ( int ) ( Math.random( ) * 10000000 );   
-			codigo = String.format( "%07d", numero );
-	
+	    if (asientos == null || asientos.isEmpty()) {
+	    	
+	        throw new Exception("No se ha especificado un catálogo de asientos");
+
+	    }
 	        
-	        while( codigos.contains("N" + codigo ) )
-	        {
-	        	int numeroe = ( int ) ( Math.random( ) * 10000000 );   
-				codigo = String.format( "%07d", numeroe );
+	    if (!localidad.verificadorAsociacionEvento(evento)) {
+	    	
+	    throw new Exception("La localidad no está asociada al evento ingresado por parámetro");
+	    
+	    }
+	    
+	    
+	    if (localidad.getTipo().equals("BASICA")) {
+	    	
+	    
+	        throw new Exception("Si la localidad es básica, se deben generar tiquetes simples solamente");
+	    }
+	        
+	    LocalidadNumerada local = (LocalidadNumerada) localidad;
+
+	    Set<String> unicos = new HashSet<>(asientos);
+	    
+	    if (unicos.size() != asientos.size()) {
+	    	
+	    
+	        throw new Exception("Hay asientos repetidos");
+	    }
+	        
+	    for (String asiento: asientos) {
+	    	
+	        if (!local.asientoLibre(asiento)) {
+	            throw new Exception("El asiento " + asiento + " no está libre");
+	    }
+	    }
+
+	    for (String asiento : asientos) {
+	    	
+	        local.ocuparAsiento(asiento);
+	    }
+
+	    List<TiqueteNumerado> generados = new ArrayList<>(asientos.size());
+	    for (String asiento : asientos) {
+	    	
+	        String codigo;
+	        
+	        int numero = (int) (Math.random() * 10000000);
+	        codigo = String.format("%07d", numero);
+	        
+	        while (codigos.contains("N" + codigo)) {
+	        	
+	            int numeroe = (int) (Math.random() * 10000000);
+	            codigo = String.format("%07d", numeroe);
 	        }
-	
-	       
+	        
 	        codigos.add("N" + codigo);
-			
-			TiqueteNumerado tiket = new TiqueteNumerado("N" + codigo, local.getPrecio(), fecha, hora, evento, localidad, asiento);
-			evento.addTiqueteNumerado(tiket);
-			local.addTiqueteNumerado(tiket);
-			generados.add(tiket);
-			
-			
-		}
-		
-		return generados;
-	
-	
-	
+
+	        TiqueteNumerado tiket = new TiqueteNumerado("N" + codigo, local.getPrecio(), evento.getFecha(), evento.getHora(),
+	                evento, localidad, asiento);
+
+	        evento.addTiqueteNumerado(tiket);
+	        local.addTiqueteNumerado(tiket);
+	        generados.add(tiket);
+	    }
+
+	    return generados;
 	}
 	
 	

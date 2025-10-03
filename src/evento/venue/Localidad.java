@@ -13,7 +13,20 @@ public abstract class Localidad {
 	
 	
 	
-	public Localidad(String idLocalidad, double precio, Evento eventoAsociado, String tipo){
+	public Localidad(String idLocalidad, double precio, Evento eventoAsociado, String tipo) throws Exception{
+		
+		
+		if (precio < 0) {
+			
+			throw new Exception("El precio no puede ser negativo");
+			
+		}
+		
+		if(eventoAsociado == null) {
+			
+			throw new Exception("Falla al ingresar el evento");
+		}
+		
 		
 		this.idLocalidad = idLocalidad;
 		this.precio = precio;
@@ -47,7 +60,7 @@ public abstract class Localidad {
 	public boolean verificadorAsociacionEvento(Evento evento) {
 		
 		
-		if(this.eventoAsociado.equals(evento)) {
+		if(this.eventoAsociado.getIdEvento().equals(evento.getIdEvento())) {
 			
 			return true;
 			

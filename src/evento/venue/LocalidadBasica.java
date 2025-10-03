@@ -18,9 +18,16 @@ public class LocalidadBasica extends Localidad {
 	
 	
 	
-	public LocalidadBasica(String idLocalidad, double precio, Evento eventoAsociado, int capacidad) {
+	public LocalidadBasica(String idLocalidad, double precio, Evento eventoAsociado, int capacidad) throws Exception {
 		
 		super(idLocalidad, precio, eventoAsociado, "BASICA");
+		
+		if(capacidad < 0) {
+			
+			throw new Exception("La capacidad no puede ser negativa");
+			
+		}
+		
 		
 		this.cuposTotales = capacidad;
 		this.cuposDisponibles = capacidad;
@@ -44,7 +51,15 @@ public class LocalidadBasica extends Localidad {
 
 
 
-	public boolean verificarCupo(int numero) {
+	public boolean verificarCupo(int numero) throws Exception {
+		
+		
+		if(numero < 0) {
+			
+			throw new Exception("No se puede verificar un número negativo de cupos");
+			
+		}
+		
 		
 		if(numero > this.cuposDisponibles) {
 			
@@ -57,15 +72,28 @@ public class LocalidadBasica extends Localidad {
 	}
 	
 	
-	public void reservar(int numero) {
+	public void reservar(int numero) throws Exception {
+		
+		
+		if(numero < 0) {
+			
+			throw new Exception("No se puede reservar un número negativo de tiquetes");
+			
+		}
+		
 		
 		this.cuposDisponibles -= numero;
 		
 	}
 	
 	
-	public void liberar(int numero) {
+	public void liberar(int numero) throws Exception {
 		
+		if(numero < 0) {
+			
+			throw new Exception("No se puede liberar un número negativo de tiquetes");
+			
+		}
 		
 		
 		this.cuposDisponibles += numero;
