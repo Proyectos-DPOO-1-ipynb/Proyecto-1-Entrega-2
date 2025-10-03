@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import evento.venue.Localidad;
+import evento.venue.LocalidadNumerada;
 import evento.venue.Venue;
 import usuario.Administrador;
 import usuario.comprador.Organizador;
@@ -63,22 +65,76 @@ public class GestorEventos {
 		}
 	
 	
-	public List<String> validarEvento(Evento evento) throws Exception {
+	public static List<String> validarEvento(Evento evento) {
 		
 		
 		List<String> problemas = new ArrayList<>();
 		
 		if (evento.getVenueAsignado().getEstado() != true) {
 			
-			throw new Exception("El venue no ha sido aprobado");
 			
-		} else if {
+			problemas.add("Venue no aprobado");
+			
+		} else if (evento.getVenueAsignado().buscarDisponibilidad(evento.getFecha())==false) {
+			
+			problemas.add("Venue no disponible");
+			
+		} else if(evento.getLocalidades().size() == 0) {
+			
+			
+			problemas.add("No hay localidades asignadas");
+			
+			
+		} else {
+			
+			List<Localidad> localidadese = evento.getLocalidades();
+			
+			for(Localidad loc:localidadese) {
+				
+				if(loc.getTipo().equals("NUMERADA")) {
+				
+					LocalidadNumerada local = (LocalidadNumerada) loc;
+					
+					List<String> asientoscontrol = local.getAsientosTotales();
+					List<String> asientos = local.getAsientosTotales();
+					
+					for(String asiento:asientoscontrol) {
+						
+						asientos.remove(asiento);
+						if(asientos.contains(asiento)) {
+							
+							
+							problemas.add("Hay asientos repetidos en la localidad " + loc.getIdLocalidad());
+							break;
+							
+						}
+					}	
+				}
+				
+				break;
+			}
+			
+		}
+		
+		return problemas;	
 		
 		
+	}
+	
+	
+	public static String publicarEvento(Evento evento) {
 		
 		
+		if(validarEvento(evento).size() == 0) {
+			
+			evento.cambiarEstado();
+			evento.getVenueAsignado().addEventotoVenue(evento);
+			
+			
+			
+		}
 		
-		
+		return "Ha sido publicado el siguiente evento: " + evento.getIdEvento();
 		
 		
 		

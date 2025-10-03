@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evento.Evento;
+import tiquete.Tiquete;
+import tiquete.TiqueteNumerado;
+import tiquete.TiqueteSimple;
 
 public class LocalidadNumerada extends Localidad {
 	
 	
 	private List<String> asientosTotales; //Cada asiento es un idAsiento str
 	private List<String> asientosOcupados = new ArrayList<>();
-	
+	private List<Tiquete> tiquetes = new ArrayList<>();
+
 	
 	public LocalidadNumerada(String idLocalidad, double precio, Evento eventoAsociado, List<String> asientos) {
 		
@@ -28,7 +32,7 @@ public class LocalidadNumerada extends Localidad {
 		
 		if(!this.asientosTotales.contains(asiento)) {
 			
-			throw new Exception("Este asiento no se encuentra en esta localidad");
+			throw new Exception("Este asiento " + asiento + "no se encuentra en esta localidad");
 			
 		}
 		
@@ -104,7 +108,12 @@ public class LocalidadNumerada extends Localidad {
 	}
 
 
-
+	public void addTiqueteNumerado(TiqueteNumerado tiquete) {
+		
+		
+		this.tiquetes.add(tiquete);
+		
+	}
 	
 	
 	

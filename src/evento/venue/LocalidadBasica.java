@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evento.Evento;
+import tiquete.Tiquete;
+import tiquete.TiqueteSimple;
 
 public class LocalidadBasica extends Localidad {
 	
 	
 	private int cuposTotales;
 	private int cuposDisponibles;
+	private List<Tiquete> tiquetes = new ArrayList<>();
 	
 	
 	
@@ -72,17 +75,24 @@ public class LocalidadBasica extends Localidad {
 			this.cuposDisponibles = this.cuposTotales;
 			
 		}
+	}
+		
+	
+	public void addTiqueteSimple(TiqueteSimple tiquete) {
 		
 		
+		this.tiquetes.add(tiquete);
 		
 	}
-
-
-
-
-	
-	
-	
-	
-
+		
 }
+
+
+
+
+	
+	
+	
+	
+
+

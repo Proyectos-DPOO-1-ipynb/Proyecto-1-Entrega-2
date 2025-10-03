@@ -111,5 +111,14 @@ public class Venue {
 	}
 	
 	
+	public void addEventotoVenue(Evento evento) {
+		
+		this.eventosAsociados.add(evento);
+		
+		
+		
+	}
+	
+	
 	
 }

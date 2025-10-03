@@ -10,6 +10,8 @@ import evento.venue.Localidad;
 import evento.venue.LocalidadBasica;
 import evento.venue.LocalidadNumerada;
 import evento.venue.Venue;
+import tiquete.Tiquete;
+import tiquete.TiqueteNumerado;
 import tiquete.TiqueteSimple;
 import usuario.comprador.Organizador;
 import usuario.comprador.Transaccion;
@@ -29,7 +31,7 @@ public class Evento {
 	private List<Localidad> localidades = new ArrayList<>();
 	
 	private List<Transaccion> comprasRealizadas = new ArrayList<>();
-	private List<TiqueteSimple> tiquetesMax = new ArrayList<>();
+	private List<Tiquete> tiquetesMax = new ArrayList<>();
 	
 	
 	private static List<Evento> eventosBorrador = new ArrayList<>();
@@ -62,6 +64,11 @@ public class Evento {
 	
 
 
+	public List<Localidad> getLocalidades() {
+		return localidades;
+	}
+
+
 	public Venue getVenueAsignado() {
 		return venueAsignado;
 	}
@@ -79,11 +86,25 @@ public class Evento {
 	}
 	
 	
+	
 	public void agregarLocalidad(Localidad localidad) {
 		
 		this.localidades.add(localidad);
 		
 		
+		
+	}
+	
+	public void removerLocalidad(Localidad localidad) {
+		
+		this.localidades.remove(localidad);
+		
+	}
+	
+	
+	public void cambiarEstado() {
+		
+		this.Estado = "PUBLICADO";
 		
 	}
 	
@@ -117,10 +138,7 @@ public class Evento {
 				
 				int [] info = {totalAsientos, ocupadas, disponibles};
 				
-				localidadesNumeradas.put(localidadN.getIdLocalidad(), info);
-				
-				
-				
+				localidadesNumeradas.put(localidadN.getIdLocalidad(), info);	
 			}	
 			
 		}
@@ -137,5 +155,21 @@ public class Evento {
 		
 		
 	}
+	
+	public void addTiqueteSimple(TiqueteSimple tiquete) {
+		
+		this.tiquetesMax.add(tiquete);
+		
+		
+	}
+	
+	
+	public void addTiqueteNumerado(TiqueteNumerado tiquete) {
+		
+		this.tiquetesMax.add(tiquete);
+	}
+	
+	
+	
 
 }

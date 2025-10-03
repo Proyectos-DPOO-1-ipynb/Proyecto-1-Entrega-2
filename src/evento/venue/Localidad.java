@@ -36,5 +36,27 @@ public abstract class Localidad {
 	
 	
 	
+	
+	
+	public double getPrecio() {
+		return precio;
+	}
+
+
+
+	public boolean verificadorAsociacionEvento(Evento evento) {
+		
+		
+		if(this.eventoAsociado.equals(evento)) {
+			
+			return true;
+			
+		} else {
+			return false;
+		}
+	}
+	
+	
+	
 
 }
