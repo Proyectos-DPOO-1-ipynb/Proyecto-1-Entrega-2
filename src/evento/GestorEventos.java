@@ -42,6 +42,22 @@ public class GestorEventos {
 		}		
 	}
 	
+	public static String crearVenue(Administrador administrador, String adminId, String VenueId,  String direccion, int maxCapacidad, 
+			List<String> restricciones) throws Exception {
+		
+		if (!adminId.equals(administrador.getAdminId())) {
+			
+			throw new Exception("No eres el administrador!");
+		}
+		
+		Venue nuevoVenue = new Venue(VenueId, direccion, maxCapacidad, restricciones);
+		
+		nuevoVenue.addPropuestaVenue();
+		nuevoVenue.cambiarEstadoAprobado();
+		
+		return "El Venue ha sido creado y añadido al catálogo";
+	}
+	
 	
 	
 	

@@ -21,6 +21,7 @@ public class Venue {
 	private static List<Venue> VenuesAprobados = new ArrayList<>(); 
 	private static List<Venue> VenuesPendientes = new ArrayList<>();
 	
+	//Lista con id de venues?
 	
 	public Venue(String VenueId, String direccion, int maxCapacidad, List<String> restricciones) throws Exception{
 		
