@@ -26,21 +26,17 @@ public class Venue {
 	public Venue(String VenueId, String direccion, int maxCapacidad, List<String> restricciones) throws Exception{
 		
 		if (maxCapacidad <= 0) {
-			
 			throw new Exception("La capacidad no puede ser negativa ni nula");
-			
 		}
-		
+
 		
 		this.VenueId = VenueId;
 		this.direccion = direccion;
 		this.maxCapacidad = maxCapacidad;
 		this.restricciones = restricciones;
 		this.estado = false;
-		
 	}
 
-	
 	public String getVenueId() {
 		return VenueId;
 	}
@@ -78,9 +74,6 @@ public class Venue {
 	public static List<Venue> getVenuesPendientes() {
 		return VenuesPendientes;
 	}
-
-
-
 
 
 	public void cambiarEstadoAprobado() throws Exception {
