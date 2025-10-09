@@ -11,6 +11,13 @@ public class TiqueteCompuesto extends Tiquete {
 		super(idTiquete, precio);
 		this.tiquetes = tiquetes;
 	}
+	
+	public void agregarTiqueteSimple(TiqueteSimple tiqueteSimple) {
+	    if (tiqueteSimple != null) {
+	        tiqueteSimple.agregarATiqueteCompuesto(this);
+	        tiquetes.add(tiqueteSimple);
+	    }
+	}
 
 }
 	
