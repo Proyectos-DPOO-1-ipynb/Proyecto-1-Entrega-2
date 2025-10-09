@@ -6,7 +6,7 @@ public class Usuario {
 	
 	private String nombre;
 	private String apellidos;
-	private LocalDate fecha;
+	private LocalDate fechaNacimiento;
 	private String login;
 	private String password;
 	private String correo;

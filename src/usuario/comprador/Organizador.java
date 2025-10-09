@@ -1,5 +1,5 @@
 package usuario.comprador;
 
-public class Organizador {
-
+public class Organizador extends Comprador {
+	
 }
