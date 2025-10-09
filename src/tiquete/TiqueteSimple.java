@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import evento.Evento;
 import evento.venue.Localidad;
+import tiquete.TiqueteCompuesto;
 
 public class TiqueteSimple extends Tiquete {
 	
@@ -15,6 +16,9 @@ public class TiqueteSimple extends Tiquete {
 	private Evento eventoAsociado;
 	private Localidad localidadTiquete;
 	
+	private TiqueteCompuesto paqueteAsociado;
+
+	
 	public TiqueteSimple(String idTiquete, double precio, LocalDate fecha, int hora, Evento eventoAsociado,
 			Localidad localidadTiquete) {
 		
@@ -23,6 +27,14 @@ public class TiqueteSimple extends Tiquete {
 		this.hora = hora;
 		this.eventoAsociado = eventoAsociado;
 		this.localidadTiquete = localidadTiquete;
+	}
+	
+	public TiqueteCompuesto getPaqueteAsociado() {
+	    return this.paqueteAsociado;
+	}
+	
+	public void agregarATiqueteCompuesto(TiqueteCompuesto paqueteAsociado) {
+	    this.paqueteAsociado = paqueteAsociado;
 	}
 	
 	
