@@ -130,8 +130,7 @@ public class GestorEventos {
 							break;
 						}
 					}	
-				}
-				
+				}	
 			}
 			
 			if(capacidadnom > evento.getVenueAsignado().getMaxCapacidad()) {
@@ -139,7 +138,6 @@ public class GestorEventos {
 			}
 			
 		return problemas;	
-	
 	}
 	
 	
