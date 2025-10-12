@@ -14,39 +14,28 @@ import usuario.comprador.Organizador;
 public class GestorEventos {
 	
 	
-	public static String proponerVenue(Organizador organizador,String VenueId,  String direccion, int maxCapacidad, 
-			List<String> restricciones) throws Exception {
+	public static String proponerVenue(Organizador organizador,String VenueId,  String direccion, int maxCapacidad, List<String> restricciones) throws Exception {
 		
 		Venue propuesta = new Venue(VenueId, direccion, maxCapacidad, restricciones);
 		
 		propuesta.addPropuestaVenue();
 		
 		return "El Venue" + propuesta.getVenueId() + "ha sido propuesto. Espere la confirmación del Administrador";
-		
-		
 	}
 	
 	public static String aprobarVenue(Administrador administrador, String adminId, Venue venue) throws Exception {
 		
 		if (!adminId.equals(administrador.getAdminId())) {
-			
 			throw new Exception("No eres el administrador!");
-			
 		} else {
-				
 			venue.cambiarEstadoAprobado();
-			
-			return "El Venue ha sido aprobado y añadido al catálogo";
-				
-				
+			return "El Venue ha sido aprobado y añadido al catálogo";		
 		}		
 	}
 	
-	public static String crearVenue(Administrador administrador, String adminId, String VenueId,  String direccion, int maxCapacidad, 
-			List<String> restricciones) throws Exception {
+	public static String crearVenue(Administrador administrador, String adminId, String VenueId,  String direccion, int maxCapacidad, List<String> restricciones) throws Exception {
 		
 		if (!adminId.equals(administrador.getAdminId())) {
-			
 			throw new Exception("No eres el administrador!");
 		}
 		
@@ -69,7 +58,6 @@ public class GestorEventos {
 		}
 		
 		if(venue.buscarDisponibilidad(fecha) != true) {
-			
 			throw new Exception("El venue está ocupado para esa fecha. Busque otro");	
 		}
 		
@@ -78,28 +66,20 @@ public class GestorEventos {
 		eventoNuevo.addEventoBorrador();
 		
 		return "Se ha creado el siguiente evento en borrador:" + eventoNuevo.getIdEvento();
-			
-			
+
 		}
 	
 	
 	public static String asociarLocalidadBasica(String idLocalidad, double precio, Evento eventoAsociado, int capacidad) throws Exception {
 		
-	
-			
 		LocalidadBasica localidadprop = new LocalidadBasica(idLocalidad, precio, eventoAsociado, capacidad);
-			
 		eventoAsociado.agregarLocalidad(localidadprop);
-				
 		return "La localidad con id: " + localidadprop.getIdLocalidad() + " fue añadida al evento con id " + eventoAsociado.getIdEvento();
 	}
 	
-	
-	
+
 	
 	public static String asociarLocalidadNumerada(String idLocalidad, double precio, Evento eventoAsociado, List<String> asientos) throws Exception {
-		
-		
 		
 		LocalidadNumerada localidadprop = new LocalidadNumerada(idLocalidad, precio, eventoAsociado, asientos);
 			
@@ -110,81 +90,56 @@ public class GestorEventos {
 	
 	
 	
-	
-	
 	public static List<String> validarEvento(Evento evento) {
-		
 		
 		int capacidadnom = 0;
 		
 		List<String> problemas = new ArrayList<>();
 		
-		if (evento.getVenueAsignado().getEstado() != true) {
-			
-			
-			problemas.add("Venue no aprobado");
-			
-		} if (evento.getVenueAsignado().buscarDisponibilidad(evento.getFecha())==false) {
-			
+		if (evento.getVenueAsignado().getEstado() != true) {			
+			problemas.add("Venue no aprobado");	
+		}
+		
+		if (evento.getVenueAsignado().buscarDisponibilidad(evento.getFecha())==false) {
 			problemas.add("Venue no disponible");
-			
-		}  if(evento.getLocalidades().size() == 0) {
-			
-			
+		}  
+		
+		if(evento.getLocalidades().size() == 0) {	
 			problemas.add("No hay localidades asignadas");
-			
-			
 		} //Se puede considerar que la siguiente funcinalidad quede incrustada en el constructor de LocalidadNumerada
 			
 			List<Localidad> localidadese = evento.getLocalidades();
 			
 			for(Localidad loc:localidadese) {
 				
-				
-				if(loc.getTipo().equals("BASICA")) {
-					
+				if(loc.getTipo().equals("BASICA")) {			
 					LocalidadBasica local = (LocalidadBasica) loc;
-					
 					capacidadnom += local.getCuposTotales();
 				}
 				
-				
-				
 				if(loc.getTipo().equals("NUMERADA")) {
-				
 					LocalidadNumerada local = (LocalidadNumerada) loc;
-					
 					capacidadnom += local.getAsientosTotales().size();
-					
 					List<String> asientoscontrol = new ArrayList<>(local.getAsientosTotales());
 					List<String> asientos = new ArrayList<>(local.getAsientosTotales());
 					
 					for(String asiento:asientoscontrol) {
-						
 						asientos.remove(asiento);
 						if(asientos.contains(asiento)) {
-							
-							
 							problemas.add("Hay asientos repetidos en la localidad " + loc.getIdLocalidad());
 							break;
-							
 						}
 					}	
 				}
 				
-				
 			}
 			
 			if(capacidadnom > evento.getVenueAsignado().getMaxCapacidad()) {
-				
 				problemas.add("Los cupos de las localidades superan la capacidad del venue");
 			}
 			
-		
-		
 		return problemas;	
-		
-		
+	
 	}
 	
 	
@@ -192,28 +147,18 @@ public class GestorEventos {
 		
 		
 		if(validarEvento(evento).size() == 0) {
-			
 			evento.cambiarEstado();
-			
 			if(evento.getEstado().equals("PUBLICADO")) {
-				
 				return "Ha sido publicado el siguiente evento: " + evento.getIdEvento();
-			
 			} else {
-				
 				return "Intente nuevamente";
-				
 			}
-			
 		} else {
-			
 			return "El evento no ha sido publicado, pues ha fallado la validación";
 		}
-			
-	}
+	}	
 		
-		
-	}
+}
 		
 		
 		

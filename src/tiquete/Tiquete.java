@@ -26,9 +26,6 @@ public abstract class Tiquete {
 		}
 		double cargoServicio = base * cargoServicioPct;
 		return base + cargoServicio + costoEmisionFijo;
-		
 	}
-
-	
 	
 }
