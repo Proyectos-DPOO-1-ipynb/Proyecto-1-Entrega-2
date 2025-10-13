@@ -54,7 +54,7 @@ public class Descuento {
 	}
 
 	public Localidad getLocalidadAsociada() {
-		return localidadAsociada;
+		return localidad;
 	}
 
 	public void setPorcentaje(double porcentaje) {
@@ -69,8 +69,8 @@ public class Descuento {
 		this.fechaFin = fechaFin;
 	}
 
-	public void setLocalidadAsociada(Localidad localidadAsociada) {
-		this.localidadAsociada = localidadAsociada;
+	public void setLocalidadAsociada(Localidad localidad) {
+		this.localidad = localidad;
 	}
 	
 }
