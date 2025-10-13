@@ -18,16 +18,12 @@ public abstract class Localidad {
 		
 		
 		if (precio < 0) {
-			
 			throw new Exception("El precio no puede ser negativo");
-			
 		}
 		
 		if(eventoAsociado == null) {
-			
 			throw new Exception("Falla al ingresar el evento");
 		}
-		
 		
 		this.idLocalidad = idLocalidad;
 		this.precio = precio;
@@ -37,21 +33,13 @@ public abstract class Localidad {
 		
 	}
 
-
-
 	public String getTipo() {
 		return tipo;
 	}
 
-
-
 	public String getIdLocalidad() {
 		return idLocalidad;
 	}
-	
-	
-	
-	
 	
 	public double getPrecio() {
 		return precio;
@@ -61,30 +49,23 @@ public abstract class Localidad {
 		return descuento.getPorcentaje();
 	}
 
-
 	public boolean verificadorAsociacionEvento(Evento evento) {
 		
-		
 		if(this.eventoAsociado.getIdEvento().equals(evento.getIdEvento())) {
-			
 			return true;
-			
 		} else {
 			return false;
 		}
 	}
 	
 	public void agregarDescuento(Descuento descuento) {
-		
 		this.descuento = descuento;
 	}
 	
 	
 	public void cancelarDescuento() {
-		
 		this.descuento = null;
 	}
-	
 	
 
 }

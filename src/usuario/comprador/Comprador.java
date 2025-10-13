@@ -13,4 +13,5 @@ public class Comprador extends Usuario {
 	private List<Tiquete> historicoTiquetes;
 	
 	
+	
 }

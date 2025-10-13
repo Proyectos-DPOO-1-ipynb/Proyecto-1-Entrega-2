@@ -28,10 +28,10 @@ public class Evento {
 	
 	private String Estado;
 	
-	private List<Localidad> localidades = new ArrayList<>();
+	private List<Localidad> localidades;
 	
-	private List<Transaccion> comprasRealizadas = new ArrayList<>();
-	private List<Tiquete> tiquetesMax = new ArrayList<>();
+	private List<Transaccion> comprasRealizadas;
+	private List<Tiquete> tiquetesMax;
 	
 	
 	private static List<Evento> eventosBorrador = new ArrayList<>();
@@ -47,6 +47,10 @@ public class Evento {
 		this.venueAsignado = venueAsignado;
 		this.organizadorAsignado = organizadorAsignado;
 		this.Estado = "BORRADOR";
+		
+		this.localidades = new ArrayList<>();
+		this.comprasRealizadas = new ArrayList<>();
+		
 		
 	}
 
@@ -182,6 +186,7 @@ public class Evento {
 	public void addTiqueteNumerado(TiqueteNumerado tiquete) {	
 		this.tiquetesMax.add(tiquete);
 	}
+	
 	
 
 }

@@ -71,10 +71,7 @@ public class EmisorTiquetes {
 		
 		return generados;
 
-		
 	}
-	
-	
 	
 	public static List<TiqueteNumerado> generarTiqueteNumerado(Evento evento, Localidad localidad, List<String> asientos) throws Exception {
 		
@@ -134,5 +131,22 @@ public class EmisorTiquetes {
 	    }
 	    return generados;
 	}
+
+	public TiqueteCompuesto emitirPaqueteMultipleEvento (List<Evento> eventos) throws Exception {
+		
+		if (eventos == null || eventos.size() <2) {
+			throw new Exception ("Se requieren al menos 2 eventos para un Paquete Multievento");
+		}
+		
+		List<TiqueteSimple> localidades = new ArrayList<>();
+		
+		for (Evento ev: eventos) {
+			
+		}
+		
+		return null;
+		
+	}
+	
 	
 }

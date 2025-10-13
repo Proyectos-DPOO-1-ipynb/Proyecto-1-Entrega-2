@@ -19,13 +19,15 @@ public abstract class Tiquete {
 		double base = this.precio;
 		
 		if (dcto != null) {
-			double porcentaje = dcto.getPorcentaje();
+			double desc = dcto.getPorcentaje();
 			
-			// El descuento se calcula sobre el precio base 
-			base = base - (porcentaje * base);
+			double valorDescuento = base * desc;
+			base = base - valorDescuento;
+			
 		}
 		double cargoServicio = base * cargoServicioPct;
 		return base + cargoServicio + costoEmisionFijo;
 	}
+
 	
 }
