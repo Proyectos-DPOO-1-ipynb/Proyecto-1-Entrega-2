@@ -39,38 +39,77 @@ public class Descuento {
 		this.fechaFin = fechaFin;
 		
 	}
-	
-	public double getPorcentaje() {
-		return porcentaje;
-		
-	}
-	
-	public LocalDate getFechaInicio() {
-		return fechaInicio;
+
+
+	public Organizador getOrganizador() {
+		return organizador;
 	}
 
-	public LocalDate getFechaFin() {
-		return fechaFin;
+
+	public void setOrganizador(Organizador organizador) {
+		this.organizador = organizador;
 	}
 
-	public Localidad getLocalidadAsociada() {
+
+	public Evento getEvento() {
+		return evento;
+	}
+
+
+	public void setEvento(Evento evento) {
+		this.evento = evento;
+	}
+
+
+	public Localidad getLocalidad() {
 		return localidad;
 	}
+
+
+	public void setLocalidad(Localidad localidad) {
+		this.localidad = localidad;
+	}
+
+
+	public double getPorcentaje() {
+		return porcentaje;
+	}
+
 
 	public void setPorcentaje(double porcentaje) {
 		this.porcentaje = porcentaje;
 	}
 
+
+	public LocalDate getFechaInicio() {
+		return fechaInicio;
+	}
+
+
 	public void setFechaInicio(LocalDate fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
+
+
+	public LocalDate getFechaFin() {
+		return fechaFin;
+	}
+
 
 	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 
-	public void setLocalidadAsociada(Localidad localidad) {
-		this.localidad = localidad;
+
+	public String getEstado() {
+		return estado;
 	}
+
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	
+	
 	
 }
