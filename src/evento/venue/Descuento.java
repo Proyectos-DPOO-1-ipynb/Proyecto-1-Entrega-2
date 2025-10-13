@@ -45,26 +45,13 @@ public class Descuento {
 		this.porcentaje = porcentaje;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
-		
-		
-		
-		
-	
-		
-		
+
 		
 	}
 	
-	
-	
 	public double getPorcentaje() {
-		
 		return porcentaje;
 		
 	}
-	
-	
-	
-	
 	
 }
