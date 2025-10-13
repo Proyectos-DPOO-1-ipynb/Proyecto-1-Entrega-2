@@ -8,6 +8,7 @@ public abstract class Localidad {
 	
 	private String idLocalidad;
 	private double precio;
+	private Descuento descuento;
 	private Evento eventoAsociado;
 	private String tipo;
 	
@@ -32,6 +33,7 @@ public abstract class Localidad {
 		this.precio = precio;
 		this.eventoAsociado = eventoAsociado;
 		this.tipo = tipo;
+		this.descuento = null;
 		
 	}
 
@@ -55,6 +57,9 @@ public abstract class Localidad {
 		return precio;
 	}
 
+	public double getDescuento() {
+		return descuento.getPorcentaje();
+	}
 
 
 	public boolean verificadorAsociacionEvento(Evento evento) {
@@ -69,6 +74,16 @@ public abstract class Localidad {
 		}
 	}
 	
+	public void agregarDescuento(Descuento descuento) {
+		
+		this.descuento = descuento;
+	}
+	
+	
+	public void cancelarDescuento() {
+		
+		this.descuento = null;
+	}
 	
 	
 

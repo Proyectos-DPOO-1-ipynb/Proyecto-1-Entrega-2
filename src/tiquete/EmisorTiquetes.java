@@ -21,33 +21,24 @@ public class EmisorTiquetes {
 		
 		
 		if(cantidad <= 0) {
-			
 			throw new Exception("No se ha especificado un número de tiquetes");
-			
 		}
 		
 		
 		List<TiqueteSimple> generados = new ArrayList<>();
-		
 		// Verificación correspondencia localidad-Evento
-		
-		if(localidad.verificadorAsociacionEvento(evento) != true) {
-			
-			throw new Exception("La localidad no está asociada al evento ingresado por parámetro");
-			
+		if(localidad.verificadorAsociacionEvento(evento) != true) {	
+			throw new Exception("La localidad no está asociada al evento ingresado por parámetro");	
 		}
 		
 		if(localidad.getTipo().equals("NUMERADA")) {
-			
 			throw new Exception("Si la localidad es numerada, se deben generar tiquetes simples-numerados");
 		}
 		
 		LocalidadBasica local = (LocalidadBasica) localidad;
 		
 		if(local.verificarCupo(cantidad) == false) {
-			
 			throw new Exception("La cantidad de tiquetes que desea crear supera el cupo de la Localidad. Intente otro valor");
-			
 		}
 		
 		
@@ -59,7 +50,6 @@ public class EmisorTiquetes {
 			
 	    	int numero = ( int ) ( Math.random( ) * 100000000 );   
 			codigo = String.format( "%08d", numero );
-	
 	        
 	        while( codigos.contains( codigo ) )
 	        {
@@ -80,8 +70,7 @@ public class EmisorTiquetes {
 		local.reservar(cantidad);
 		
 		return generados;
-		
-	 
+
 		
 	}
 	
@@ -90,21 +79,15 @@ public class EmisorTiquetes {
 	public static List<TiqueteNumerado> generarTiqueteNumerado(Evento evento, Localidad localidad, List<String> asientos) throws Exception {
 		
 	    if (asientos == null || asientos.isEmpty()) {
-	    	
 	        throw new Exception("No se ha especificado un catálogo de asientos");
-
 	    }
 	        
 	    if (!localidad.verificadorAsociacionEvento(evento)) {
-	    	
-	    throw new Exception("La localidad no está asociada al evento ingresado por parámetro");
-	    
+	    	throw new Exception("La localidad no está asociada al evento ingresado por parámetro");
 	    }
 	    
 	    
 	    if (localidad.getTipo().equals("BASICA")) {
-	    	
-	    
 	        throw new Exception("Si la localidad es básica, se deben generar tiquetes simples solamente");
 	    }
 	        
@@ -113,20 +96,16 @@ public class EmisorTiquetes {
 	    Set<String> unicos = new HashSet<>(asientos);
 	    
 	    if (unicos.size() != asientos.size()) {
-	    	
-	    
 	        throw new Exception("Hay asientos repetidos");
 	    }
 	        
 	    for (String asiento: asientos) {
-	    	
 	        if (!local.asientoLibre(asiento)) {
 	            throw new Exception("El asiento " + asiento + " no está libre");
-	    }
+	        	}
 	    }
 
 	    for (String asiento : asientos) {
-	    	
 	        local.ocuparAsiento(asiento);
 	    }
 
@@ -153,10 +132,7 @@ public class EmisorTiquetes {
 	        local.addTiqueteNumerado(tiket);
 	        generados.add(tiket);
 	    }
-
 	    return generados;
 	}
 	
-	
-
 }
