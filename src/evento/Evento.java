@@ -47,8 +47,7 @@ public class Evento {
 		this.venueAsignado = venueAsignado;
 		this.organizadorAsignado = organizadorAsignado;
 		this.Estado = "BORRADOR";
-
-
+		
 	}
 
 
@@ -61,9 +60,6 @@ public class Evento {
 		return idEvento;
 	}
 	
-	
-	
-
 
 	public String getEstado() {
 		return Estado;
@@ -93,9 +89,7 @@ public class Evento {
 	public void addEventoBorrador() throws Exception {
 		
 		if(eventosBorrador.contains(this)) {
-			
 			throw new Exception("Ya este evento está en borrador");
-			
 		}
 		eventosBorrador.add(this);
 		
@@ -105,16 +99,12 @@ public class Evento {
 	
 	public void agregarLocalidad(Localidad localidad) throws Exception {
 		
-		
 		String idlocal = localidad.getIdLocalidad();
 		
 		for(Localidad localidads:this.localidades) {
-			
 			if(idlocal.equals(localidads.getIdLocalidad())) {
-			
 			throw new Exception("Ese id ya está registrado. Pruebe otro");
-			
-		}
+			}
 		}
 		
 		this.localidades.add(localidad);	
@@ -122,9 +112,7 @@ public class Evento {
 	
 	
 	public void removerLocalidad(Localidad localidad) {
-		
 		this.localidades.remove(localidad);
-		
 	}
 	
 	
@@ -132,14 +120,8 @@ public class Evento {
 		
 		
 		if (eventosPublicados.contains(this)) {
-			
-			throw new Exception("Este evento ya fue publicado");
-			
+			throw new Exception("Este evento ya fue publicado");	
 		} 
-		
-		
-		
-		
 		
 		this.getVenueAsignado().addEventotoVenue(this);
 		
@@ -183,7 +165,6 @@ public class Evento {
 			
 		}
 		
-		
 		List<Map<String, Object>> resumen = new ArrayList<>();
 		
 		resumen.add(localidadesNumeradas);
@@ -191,25 +172,16 @@ public class Evento {
 		
 		return resumen;
 		
-		
-		
-		
 	}
 	
 	public void addTiqueteSimple(TiqueteSimple tiquete) {
-		
-		this.tiquetesMax.add(tiquete);
-		
-		
-	}
-	
-	
-	public void addTiqueteNumerado(TiqueteNumerado tiquete) {
-		
 		this.tiquetesMax.add(tiquete);
 	}
 	
 	
+	public void addTiqueteNumerado(TiqueteNumerado tiquete) {	
+		this.tiquetesMax.add(tiquete);
+	}
 	
 
 }
