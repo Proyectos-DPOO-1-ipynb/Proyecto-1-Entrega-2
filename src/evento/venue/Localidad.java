@@ -80,6 +80,11 @@ public abstract class Localidad {
 	}
 	
 	
+	public void cancelarDescuento() {
+		
+		this.descuento = null;
+	}
+	
 	
 
 }
