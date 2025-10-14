@@ -11,10 +11,11 @@ public abstract class Localidad {
 	private Descuento descuento;
 	private Evento eventoAsociado;
 	private String tipo;
+	private int capacidadLocalidad;
 	
 	
 	
-	public Localidad(String idLocalidad, double precio, Evento eventoAsociado, String tipo) throws Exception{
+	public Localidad(String idLocalidad, double precio, Evento eventoAsociado, String tipo, int capacidad) throws Exception{
 		
 		
 		if (precio < 0) {
@@ -25,11 +26,16 @@ public abstract class Localidad {
 			throw new Exception("Falla al ingresar el evento");
 		}
 		
+		if (capacidad > eventoAsociado.getTiquetesMax() && capacidad < 0) {
+			throw new Exception("La localidad no puede tener más cupo que el evento o ser un número negativo");
+		}
+		
 		this.idLocalidad = idLocalidad;
 		this.precio = precio;
 		this.eventoAsociado = eventoAsociado;
 		this.tipo = tipo;
 		this.descuento = null;
+		this.capacidadLocalidad = capacidad;
 		
 	}
 

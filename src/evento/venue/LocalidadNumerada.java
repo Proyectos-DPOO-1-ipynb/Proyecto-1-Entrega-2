@@ -12,13 +12,13 @@ public class LocalidadNumerada extends Localidad {
 	
 	
 	private List<String> asientosTotales; //Cada asiento es un idAsiento str
-	private List<String> asientosOcupados = new ArrayList<>();
-	private List<Tiquete> tiquetes = new ArrayList<>();
+	private List<String> asientosOcupados;
+	private List<Tiquete> tiquetesVendidos;
 
 	
-	public LocalidadNumerada(String idLocalidad, double precio, Evento eventoAsociado, List<String> asientos) throws Exception {
+	public LocalidadNumerada(String idLocalidad, double precio, Evento eventoAsociado, List<String> asientos, int capacidad) throws Exception {
 		
-		super(idLocalidad, precio, eventoAsociado, "NUMERADA");
+		super(idLocalidad, precio, eventoAsociado, "NUMERADA", capacidad);
 		
 		if(asientos == null) {
 			throw new Exception("Inserte bien la lista de asientos");
@@ -28,7 +28,14 @@ public class LocalidadNumerada extends Localidad {
 			throw new Exception("No puede tener un catálogo de asientos vacío");
 		}
 		
+		if(asientos.size() != capacidad) {
+			throw new Exception ("La cantidad de asientos no concuerdad con la cantidad ingresada");
+		}
+		
 		this.asientosTotales = asientos;
+		this.asientosOcupados = new ArrayList<>();
+		this.tiquetesVendidos = new ArrayList<>();
+		
 	}
 	
 	public int disponibles() {
@@ -94,8 +101,8 @@ public class LocalidadNumerada extends Localidad {
 	}
 
 
-	public void addTiqueteNumerado(TiqueteNumerado tiquete) {
-		this.tiquetes.add(tiquete);	
+	public void addTiqueteNumeradoCompra(TiqueteNumerado tiquete) {
+		this.tiquetesVendidos.add(tiquete);	
 	}
 	
 }

@@ -19,11 +19,9 @@ public class EmisorTiquetes {
 	
 	public static List<TiqueteSimple> generarTiqueteSimple(Evento evento, Localidad localidad,int cantidad) throws Exception {
 		
-		
 		if(cantidad <= 0) {
 			throw new Exception("No se ha especificado un número de tiquetes");
 		}
-		
 		
 		List<TiqueteSimple> generados = new ArrayList<>();
 		// Verificación correspondencia localidad-Evento
@@ -57,12 +55,10 @@ public class EmisorTiquetes {
 				codigo = String.format( "%08d", numeroe );
 	        }
 	
-	       
 	        codigos.add(codigo);
 			
 			TiqueteSimple tiket = new TiqueteSimple(codigo, local.getPrecio(), evento.getFecha(), evento.getHora(), evento, localidad);
-			evento.addTiqueteSimple(tiket);
-			local.addTiqueteSimple(tiket);
+			local.addTiqueteSimpleCompra(tiket);
 			generados.add(tiket);
 			
 		}
@@ -124,29 +120,12 @@ public class EmisorTiquetes {
 
 	        TiqueteNumerado tiket = new TiqueteNumerado("N" + codigo, local.getPrecio(), evento.getFecha(), evento.getHora(),
 	                evento, localidad, asiento);
-
-	        evento.addTiqueteNumerado(tiket);
-	        local.addTiqueteNumerado(tiket);
+	        local.addTiqueteNumeradoCompra(tiket);
 	        generados.add(tiket);
 	    }
 	    return generados;
 	}
 
-	public TiqueteCompuesto emitirPaqueteMultipleEvento (List<Evento> eventos) throws Exception {
-		
-		if (eventos == null || eventos.size() <2) {
-			throw new Exception ("Se requieren al menos 2 eventos para un Paquete Multievento");
-		}
-		
-		List<TiqueteSimple> localidades = new ArrayList<>();
-		
-		for (Evento ev: eventos) {
-			
-		}
-		
-		return null;
-		
-	}
 	
 	
 }

@@ -12,19 +12,17 @@ public class LocalidadBasica extends Localidad {
 	
 	private int cuposTotales;
 	private int cuposDisponibles;
-	private List<Tiquete> tiquetes = new ArrayList<>();
+	private List<Tiquete> tiquetesVendidos;
 	
 	
 	public LocalidadBasica(String idLocalidad, double precio, Evento eventoAsociado, int capacidad) throws Exception {
 		
-		super(idLocalidad, precio, eventoAsociado, "BASICA");
-		
-		if(capacidad < 0) {
-			throw new Exception("La capacidad no puede ser negativa");
-		}
+		super(idLocalidad, precio, eventoAsociado, "BASICA", capacidad);
 		
 		this.cuposTotales = capacidad;
 		this.cuposDisponibles = capacidad;
+		this.tiquetesVendidos = new ArrayList<>();
+		
 	}
 
 	public int getCuposDisponibles() {
@@ -72,12 +70,11 @@ public class LocalidadBasica extends Localidad {
 			this.cuposDisponibles = this.cuposTotales;
 		}
 	}
-		
 	
-	public void addTiqueteSimple(TiqueteSimple tiquete) {
-		this.tiquetes.add(tiquete);
+	public void addTiqueteSimpleCompra(Tiquete tiquete) {
+		this.tiquetesVendidos.add(tiquete);
 	}
-		
+	
 }
 
 

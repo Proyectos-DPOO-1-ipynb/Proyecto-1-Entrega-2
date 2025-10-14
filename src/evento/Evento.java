@@ -31,14 +31,14 @@ public class Evento {
 	private List<Localidad> localidades;
 	
 	private List<Transaccion> comprasRealizadas;
-	private List<Tiquete> tiquetesMax;
+	private int tiquetesMax;
 	
 	
 	private static List<Evento> eventosBorrador = new ArrayList<>();
 	private static List<Evento> eventosPublicados = new ArrayList<>();
 	
 	
-	public Evento(String tipo, LocalDate fecha, int hora, String idEvento, Venue venueAsignado, Organizador organizadorAsignado) {
+	public Evento(String tipo, LocalDate fecha, int hora, String idEvento, Venue venueAsignado, Organizador organizadorAsignado, int capacidadEvento) {
 		
 		this.tipo = tipo;
 		this.fecha = fecha;
@@ -50,8 +50,13 @@ public class Evento {
 		
 		this.localidades = new ArrayList<>();
 		this.comprasRealizadas = new ArrayList<>();
+		this.tiquetesMax = capacidadEvento;
 		
-		
+	}
+
+
+	public int getTiquetesMax() {
+		return tiquetesMax;
 	}
 
 
@@ -177,16 +182,6 @@ public class Evento {
 		return resumen;
 		
 	}
-	
-	public void addTiqueteSimple(TiqueteSimple tiquete) {
-		this.tiquetesMax.add(tiquete);
-	}
-	
-	
-	public void addTiqueteNumerado(TiqueteNumerado tiquete) {	
-		this.tiquetesMax.add(tiquete);
-	}
-	
 	
 
 }
