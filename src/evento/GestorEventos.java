@@ -87,7 +87,7 @@ public class GestorEventos {
 		
 		int capacidadLocs = verificarAgregarLocalidad(eventoAsociado, capacidad);
 		
-		if (capacidadLocs >0) {
+		if (capacidadLocs > 0) {
 			LocalidadNumerada localidadprop = new LocalidadNumerada(idLocalidad, precio, eventoAsociado, asientos, capacidad);
 			eventoAsociado.agregarLocalidad(localidadprop);	
 			return "La localidad con id: " + localidadprop.getIdLocalidad() + " fue añadida al evento con id " + eventoAsociado.getIdEvento();

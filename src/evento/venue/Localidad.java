@@ -13,8 +13,6 @@ public abstract class Localidad {
 	private String tipo;
 	private int capacidadLocalidad;
 	
-	
-	
 	public Localidad(String idLocalidad, double precio, Evento eventoAsociado, String tipo, int capacidad) throws Exception{
 		
 		

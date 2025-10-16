@@ -16,9 +16,9 @@ public class EmisorTiquetes {
 	
 	private static Set<String> codigos = new HashSet<>();
 	
-	
+	// Tiquetes Simples
 	public static List<TiqueteSimple> generarTiqueteSimple(Evento evento, Localidad localidad,int cantidad) throws Exception {
-		
+		// TODO modificar tamaño eventos al comprar
 		if(cantidad <= 0) {
 			throw new Exception("No se ha especificado un número de tiquetes");
 		}
@@ -69,8 +69,9 @@ public class EmisorTiquetes {
 
 	}
 	
+	// Tiquetes Numerados
 	public static List<TiqueteNumerado> generarTiqueteNumerado(Evento evento, Localidad localidad, List<String> asientos) throws Exception {
-		
+		// TODO modificar tamaño eventos
 	    if (asientos == null || asientos.isEmpty()) {
 	        throw new Exception("No se ha especificado un catálogo de asientos");
 	    }
@@ -126,6 +127,29 @@ public class EmisorTiquetes {
 	    return generados;
 	}
 
+	
+	public TiqueteCompuesto generarTiqueteMultipleLugar(int cantidadPalco, Evento evento, Localidad loc) throws Exception {
+		
+		// TODO mirar si debe existir otro tipo de localidad palco
+		
+		if (cantidadPalco <= 0) {
+			throw new Exception("Se debe generar al menos 1 tiquete");
+		}
+		
+		if (loc.getTipo().equals("BASICA")) {
+			LocalidadBasica locb = (LocalidadBasica) loc;
+			if (locb.getCuposDisponibles() > cantidadPalco) { //verifica indirectamente que sea mayor a 0
+				List<Tiquete> tiks = new ArrayList<>();
+				for (int i=0; i < cantidadPalco; i++) {
+					// TODO terminar de mirar
+				}
+			} 
+		} else {
+			
+		}
+		
+		return null;
+	} 
 	
 	
 }

@@ -25,16 +25,6 @@ public class LocalidadBasica extends Localidad {
 		
 	}
 
-	public int getCuposDisponibles() {
-		return cuposDisponibles;
-	}
-	
-
-	public int getCuposTotales() {
-		return cuposTotales;
-	}
-
-
 	public boolean verificarCupo(int numero) throws Exception {
 		
 		if(numero < 0) {
@@ -73,6 +63,15 @@ public class LocalidadBasica extends Localidad {
 	
 	public void addTiqueteSimpleCompra(Tiquete tiquete) {
 		this.tiquetesVendidos.add(tiquete);
+	}
+	
+	public int getCuposDisponibles() {
+		return cuposDisponibles;
+	}
+	
+
+	public int getCuposTotales() {
+		return cuposTotales;
 	}
 	
 }
