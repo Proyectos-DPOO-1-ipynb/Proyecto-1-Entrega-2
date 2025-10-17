@@ -128,28 +128,25 @@ public class EmisorTiquetes {
 	}
 
 	
-	public TiqueteCompuesto generarTiqueteMultipleLugar(int cantidadPalco, Evento evento, Localidad loc) throws Exception {
-		
-		// TODO mirar si debe existir otro tipo de localidad palco
-		
-		if (cantidadPalco <= 0) {
-			throw new Exception("Se debe generar al menos 1 tiquete");
-		}
-		
-		if (loc.getTipo().equals("BASICA")) {
-			LocalidadBasica locb = (LocalidadBasica) loc;
-			if (locb.getCuposDisponibles() > cantidadPalco) { //verifica indirectamente que sea mayor a 0
-				List<Tiquete> tiks = new ArrayList<>();
-				for (int i=0; i < cantidadPalco; i++) {
-					// TODO terminar de mirar
-				}
-			} 
-		} else {
-			
-		}
-		
-		return null;
-	} 
+	/*
+	 * public TiqueteCompuesto generarTiqueteMultipleLugar(int cantidadPalco, Evento
+	 * evento, Localidad loc) throws Exception {
+	 * 
+	 * // TODO mirar si debe existir otro tipo de localidad palco
+	 * 
+	 * if (cantidadPalco <= 0) { throw new
+	 * Exception("Se debe generar al menos 1 tiquete"); }
+	 * 
+	 * if (loc.getTipo().equals("BASICA")) { LocalidadBasica locb =
+	 * (LocalidadBasica) loc; if (locb.getCuposDisponibles() > cantidadPalco) {
+	 * //verifica indirectamente que sea mayor a 0 List<Tiquete> tiks = new
+	 * ArrayList<>(); for (int i=0; i < cantidadPalco; i++) { // TODO terminar de
+	 * mirar } } } else {
+	 * 
+	 * }
+	 * 
+	 * return null; }
+	 */
 	
 	
 }
