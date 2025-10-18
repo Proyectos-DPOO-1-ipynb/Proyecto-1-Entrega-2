@@ -210,6 +210,7 @@ public class Evento {
 	}
 	
 	
-	
+	public String getTipo() { return tipo; }
+	public Organizador getOrganizadorAsignado() { return organizadorAsignado; }
 
 }
