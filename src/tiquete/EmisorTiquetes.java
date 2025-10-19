@@ -64,6 +64,7 @@ public class EmisorTiquetes {
 		}
 		
 		local.reservar(cantidad);
+		evento.reservarAsientos(cantidad);
 		
 		return generados;
 
@@ -124,6 +125,8 @@ public class EmisorTiquetes {
 	        local.addTiqueteNumeradoCompra(tiket);
 	        generados.add(tiket);
 	    }
+	    
+	    evento.reservarAsientos(asientos.size());
 	    return generados;
 	}
 

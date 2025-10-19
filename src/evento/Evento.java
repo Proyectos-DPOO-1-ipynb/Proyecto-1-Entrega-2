@@ -32,6 +32,7 @@ public class Evento {
 	
 	private List<Transaccion> comprasRealizadas;
 	private int tiquetesMax;
+	private int disponibles;
 	
 	
 	private static List<Evento> eventosBorrador = new ArrayList<>();
@@ -51,6 +52,7 @@ public class Evento {
 		this.localidades = new ArrayList<>();
 		this.comprasRealizadas = new ArrayList<>();
 		this.tiquetesMax = capacidadEvento;
+		this.disponibles = capacidadEvento;
 		
 	}
 
@@ -181,6 +183,16 @@ public class Evento {
 		
 		return resumen;
 		
+	}
+	
+	
+	public void reservarAsientos(int reservados) {
+		this.disponibles -= reservados;
+	}
+
+
+	public int getDisponibles() {
+		return disponibles;
 	}
 	
 
