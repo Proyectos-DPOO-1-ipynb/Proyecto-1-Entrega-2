@@ -11,6 +11,7 @@ import evento.Evento;
 import evento.venue.Localidad;
 import evento.venue.LocalidadBasica;
 import evento.venue.LocalidadNumerada;
+import evento.venue.LocalidadPalco;
 
 public class EmisorTiquetes {
 	

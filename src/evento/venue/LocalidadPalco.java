@@ -22,6 +22,10 @@ public class LocalidadPalco extends Localidad{
 		super(idLocalidad, precio, eventoAsociado, tipo, capacidad);
 		// TODO Auto-generated constructor stub
 		
+		if (cantidadPalcos != asientos.size()) {
+			throw new Exception ("La cantidad de palcos disponibles debe ser igual al número ingresado");
+		}
+		
 		if (tiquetesXPalco < 0) {
 			throw new Exception ("Los tiquetes por palco no pueden ser negativos");
 		}
@@ -30,11 +34,19 @@ public class LocalidadPalco extends Localidad{
 			throw new Exception ("EL catalogo de palcos debe ser un número positivo");
 		}	
 		
+		int contador = 0;
+		
 		for (List<Integer> tam: asientos.values()) {
+			contador += tam.size();
 			if (tam.size() != tiquetesXPalco) {
 				throw new Exception("Los asientos de algún palco no coincide con los tiquetesXPalco");
-			}
+			} 
 		}
+		
+		if (contador != capacidad) {
+			throw new Exception ("La localidad no tiene la misma capacidad que los asientos disponibles");
+		}
+		
 		
 		this.cantidadPalcos = cantidadPalcos;
 		this.tiquetesXPalco = tiquetesXPalco;
