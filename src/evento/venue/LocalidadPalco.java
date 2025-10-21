@@ -27,7 +27,6 @@ public class LocalidadPalco extends Localidad{
 		return cantidadPalcos - palcosVendidos.size();
 	} 
 	
-	public 
 	
 	
 	
