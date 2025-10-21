@@ -61,7 +61,7 @@ public class LocalidadBasica extends Localidad {
 		}
 	}
 	
-	public void addTiqueteSimpleCompra(Tiquete tiquete) {
+	public void addTiquetesVendidos(Tiquete tiquete) {
 		this.tiquetesVendidos.add(tiquete);
 	}
 	

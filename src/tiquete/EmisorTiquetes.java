@@ -17,7 +17,7 @@ public class EmisorTiquetes {
 	private static Set<String> codigos = new HashSet<>();
 	
 	// Tiquetes Simples
-	public static List<TiqueteSimple> generarTiqueteSimple(Evento evento, Localidad localidad,int cantidad) throws Exception {
+	public static List<TiqueteSimple> generarTiqueteSimple(Evento evento, Localidad localidad, int cantidad) throws Exception {
 		// TODO modificar tamaño eventos al comprar
 		if(cantidad <= 0) {
 			throw new Exception("No se ha especificado un número de tiquetes");
@@ -58,7 +58,7 @@ public class EmisorTiquetes {
 	        codigos.add(codigo);
 			
 			TiqueteSimple tiket = new TiqueteSimple(codigo, local.getPrecio(), evento.getFecha(), evento.getHora(), evento, localidad);
-			local.addTiqueteSimpleCompra(tiket);
+			local.addTiquetesVendidos(tiket);
 			generados.add(tiket);
 			
 		}
@@ -122,7 +122,7 @@ public class EmisorTiquetes {
 
 	        TiqueteNumerado tiket = new TiqueteNumerado("N" + codigo, local.getPrecio(), evento.getFecha(), evento.getHora(),
 	                evento, localidad, asiento);
-	        local.addTiqueteNumeradoCompra(tiket);
+	        local.addTiquetesVendidos(tiket);
 	        generados.add(tiket);
 	    }
 	    
@@ -131,25 +131,7 @@ public class EmisorTiquetes {
 	}
 
 	
-	/*
-	 * public TiqueteCompuesto generarTiqueteMultipleLugar(int cantidadPalco, Evento
-	 * evento, Localidad loc) throws Exception {
-	 * 
-	 * // TODO mirar si debe existir otro tipo de localidad palco
-	 * 
-	 * if (cantidadPalco <= 0) { throw new
-	 * Exception("Se debe generar al menos 1 tiquete"); }
-	 * 
-	 * if (loc.getTipo().equals("BASICA")) { LocalidadBasica locb =
-	 * (LocalidadBasica) loc; if (locb.getCuposDisponibles() > cantidadPalco) {
-	 * //verifica indirectamente que sea mayor a 0 List<Tiquete> tiks = new
-	 * ArrayList<>(); for (int i=0; i < cantidadPalco; i++) { // TODO terminar de
-	 * mirar } } } else {
-	 * 
-	 * }
-	 * 
-	 * return null; }
-	 */
+	
 	
 	
 }

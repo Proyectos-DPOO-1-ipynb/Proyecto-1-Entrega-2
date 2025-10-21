@@ -85,7 +85,7 @@ public class LocalidadNumerada extends Localidad {
 		}
 	}
 
-	public void addTiqueteNumeradoCompra(TiqueteNumerado tiquete) {
+	public void addTiquetesVendidos(TiqueteNumerado tiquete) {
 		this.tiquetesVendidos.add(tiquete);	
 	}
 	

@@ -29,5 +29,13 @@ public abstract class Tiquete {
 		return base + cargoServicio + costoEmisionFijo;
 	}
 
+	public String getIdTiquete() {
+		return idTiquete;
+	}
+
+	public double getPrecio() {
+		return precio;
+	}
+
 	
 }
