@@ -1,6 +1,6 @@
 package usuario.comprador;
 
-public class Compra extends Transaccion {
+public static class Compra extends Transaccion {
 	
 	private double total;
 	private String medioPago;

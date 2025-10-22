@@ -12,10 +12,37 @@ import finanzas.EstadosFinanciero;
 import finanzas.GestorFinanciero;
 
 public class Organizador extends Comprador {
-	private String idOrganizador;
-	private Venue venueAsociado;
-    private List<Evento> eventosCreados = new ArrayList<>();
 
+	private String idOrganizador;
+    private List<Evento> eventosCreados;
+    
+    private static List<String> idsOrganizadores = new ArrayList<String>();
+
+    public Organizador(String nombre, String apellidos, LocalDate fechaNacimiento, String login, String password,
+			String correo) throws Exception {
+		super(nombre, apellidos, fechaNacimiento, login, password, correo);
+		
+		this.eventosCreados = new ArrayList<Evento>();
+		this.idOrganizador = generarIdOrganizador();
+		
+	}
+    
+    private String generarIdOrganizador() {
+    	String id;
+        
+        int numero = (int) (Math.random() * 10000000);
+        id = String.format("%07d", numero);
+        
+        while (idsOrganizadores.contains("ORG" + id)) {
+        	
+            int numeroe = (int) (Math.random() * 10000000);
+            id = String.format("%07d", numeroe);
+        }
+        
+        idsOrganizadores.add("ORG" + id);
+        return "ORG" + id;
+    }
+    
     public List<Evento> getEventosCreados() {
         return eventosCreados;
     }
@@ -25,12 +52,6 @@ public class Organizador extends Comprador {
     }
     public void setIdentificacion(String idOrganizador) {
         this.idOrganizador = idOrganizador;
-    }
-    public Venue getVenueAsociado() {
-        return venueAsociado;
-    }
-    public void setVenueAsociado(Venue venueAsociado) {
-        this.venueAsociado = venueAsociado;
     }
     
  // --- Métodos financieros ---

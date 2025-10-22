@@ -6,34 +6,47 @@ import evento.venue.Venue;
 import usuario.comprador.Transaccion;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import finanzas.EstadosFinanciero;
 import finanzas.GestorFinanciero;
 
-public class Administrador {
+public class Administrador extends Usuario{
 	
 	private double cargoServicio;
 	private int maxTiquetesTransaccion;
-	// TODO sobrecargo ???\
 	private double costoEmisionFijo;
-	private Map<String, Double> sobrecargosPorTipo = new HashMap<>();
+	private Map<String, Double> sobrecargosPorTipo;
 	private String adminId;
 	
 	private List<Transaccion> transaccionesRealizadas;
 	private List<Venue> venuesPorAprobar;
 	
-	public Administrador(String adminId, double costoEmisionFijo) {
-        this.adminId = adminId;
-        this.costoEmisionFijo = costoEmisionFijo;
-
-        // valores iniciales por defecto
-        sobrecargosPorTipo.put("musical", 0.10);
+	private static List<String> adminIds = new ArrayList<String>();
+	
+	public Administrador(String nombre, String apellidos, LocalDate fechaNacimiento, String login, String password,
+			String correo, double cargoServicio, int maxTiquetesTransaccion, double costoEmisionFijo,
+			Map<String, Double> sobrecargosPorTipo, List<Transaccion> transaccionesRealizadas,
+			List<Venue> venuesPorAprobar) throws Exception {
+		
+		super(nombre, apellidos, fechaNacimiento, login, password, correo);
+		this.cargoServicio = cargoServicio;
+		this.maxTiquetesTransaccion = maxTiquetesTransaccion;
+		this.costoEmisionFijo = costoEmisionFijo;
+		this.sobrecargosPorTipo = new HashMap<String, Double>();
+		
+		sobrecargosPorTipo.put("musical", 0.10);
         sobrecargosPorTipo.put("cultural", 0.1);
         sobrecargosPorTipo.put("deportivo", 0.1);
         sobrecargosPorTipo.put("religioso", 0.1);
-    }
-	
+		
+		this.adminId = generarAdminId();
+		
+		this.transaccionesRealizadas = transaccionesRealizadas;
+		this.venuesPorAprobar = venuesPorAprobar;
+	}
+
 	public double getSobrecargoSegunEvento(String tipoEvento) throws Exception {
 		String clave = tipoEvento.trim().toLowerCase();
         if (!sobrecargosPorTipo.containsKey(clave)) {
@@ -52,6 +65,21 @@ public class Administrador {
 		return adminId;
 	}
 	
+	public String generarAdminId() {
+		String id;
+        
+        int numero = (int) (Math.random() * 10000000);
+        id = String.format("%07d", numero);
+        
+        while (adminIds.contains("AD" + id)) {
+        	
+            int numeroe = (int) (Math.random() * 10000000);
+            id = String.format("%07d", numeroe);
+        }
+        
+        adminIds.add("AD" + id);
+        return "AD" + id;
+	}
 	
 	/**
      * Retorna un resumen financiero según el filtro aplicado.
