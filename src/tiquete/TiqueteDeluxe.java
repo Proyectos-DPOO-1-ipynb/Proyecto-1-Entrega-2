@@ -1,17 +1,21 @@
 package tiquete;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TiqueteDeluxe extends TiqueteCompuesto{
+import evento.Evento;
+import evento.venue.Localidad;
 
-	private List<String> beneficios;
-	private List<String> mercancia;
+public class TiqueteDeluxe extends TiqueteSimple{
+
+	private List<Object> beneficios;
+	private List<Object> mercancia;
 	
 	
-	public TiqueteDeluxe(String idTiquete, double precio, List<TiqueteSimple> tiquetes, List<String> beneficios,
-			List<String> mercancia) {
-		super(idTiquete, precio, tiquetes);
+	public TiqueteDeluxe(String idTiquete, double precio, LocalDate fecha, int hora, Evento eventoAsociado,
+			Localidad localidadTiquete, List<Object> beneficios, List<Object> mercancia) {
+		super(idTiquete, precio, fecha, hora, eventoAsociado, localidadTiquete);
 		this.beneficios = beneficios;
 		this.mercancia = mercancia;
 	}

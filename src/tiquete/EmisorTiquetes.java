@@ -1,7 +1,5 @@
 package tiquete;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -241,17 +239,15 @@ public class EmisorTiquetes {
 	    return new TiqueteEntradaMultipleEvento(idPaquete, precioPropio, tiquetes, idEventos, idEventos.size());
 	} 
 	
-	public static TiqueteDeluxe emitirDeluxe(TiqueteSimple base, List<String> beneficios, List<String> mercancia, double precioDeluxe) throws Exception {
+	public static TiqueteDeluxe emitirDeluxe(TiqueteSimple base, List<Object> beneficios, List<Object> mercancia, double precioDeluxe) throws Exception {
 	    if (base == null) {
 	    		throw new Exception("Debe haber un tiquete base sobre el cual se hace el paquete Deluxe");
 	    }
-	    List<TiqueteSimple> comps = new ArrayList<>();
-	    comps.add(base);
 
 	    	String idPaquete = generarIdPaquete();
 
         codigos.add(idPaquete);
-	    TiqueteDeluxe deluxe = new TiqueteDeluxe(idPaquete, precioDeluxe, comps, beneficios, mercancia);
+	    TiqueteDeluxe deluxe = new TiqueteDeluxe(idPaquete, precioDeluxe, base.getFecha(), base.getHora(), base.getEventoAsociado(), base.getLocalidadTiquete(), beneficios, mercancia);
 
 	    return deluxe;
 	}
