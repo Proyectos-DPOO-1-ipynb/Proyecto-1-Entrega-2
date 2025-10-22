@@ -38,7 +38,7 @@ public class LocalidadNumerada extends Localidad {
 		
 	}
 	
-	public int disponibles() {
+	public int getDisponibles() {
 		return this.asientosTotales.size() - this.asientosOcupados.size();
 	}
 	

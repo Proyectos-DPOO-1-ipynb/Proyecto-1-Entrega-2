@@ -5,8 +5,8 @@ import java.util.List;
 
 public class TiqueteDeluxe extends TiqueteCompuesto{
 
-	private List<String> beneficios = new ArrayList<>();
-	private List<String> mercancia = new ArrayList<>();
+	private List<String> beneficios;
+	private List<String> mercancia;
 	
 	
 	public TiqueteDeluxe(String idTiquete, double precio, List<TiqueteSimple> tiquetes, List<String> beneficios,
@@ -16,6 +16,8 @@ public class TiqueteDeluxe extends TiqueteCompuesto{
 		this.mercancia = mercancia;
 	}
 
-	
+	public boolean esTransferible() {
+	    return false; // Bloqueo de transferencia para paquetes Deluxe
+	}
 	
 }

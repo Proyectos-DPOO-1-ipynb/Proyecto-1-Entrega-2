@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import evento.Evento;
@@ -39,8 +40,7 @@ public class EmisorTiquetes {
 		if(local.verificarCupo(cantidad) == false) {
 			throw new Exception("La cantidad de tiquetes que desea crear supera el cupo de la Localidad. Intente otro valor");
 		}
-		
-		
+	
 		// Generación de Id único del tiquete
 		
 		for(int i=0;i<cantidad;i++) {
@@ -82,11 +82,10 @@ public class EmisorTiquetes {
 	    	throw new Exception("La localidad no está asociada al evento ingresado por parámetro");
 	    }
 	    
-	    
 	    if (localidad.getTipo().equals("BASICA")) {
 	        throw new Exception("Si la localidad es básica, se deben generar tiquetes simples solamente");
 	    }
-	        
+	    
 	    LocalidadNumerada local = (LocalidadNumerada) localidad;
 
 	    Set<String> unicos = new HashSet<>(asientos);
@@ -132,7 +131,145 @@ public class EmisorTiquetes {
 	}
 
 	
+	public static TiqueteEntradaMultipleLugar emitirPalco(Evento evento, LocalidadPalco localidad, int idPalco, double precioPropio) throws Exception {
+	    
+	    if (!localidad.disponibilidadPalco(idPalco)) {
+	    		throw new Exception ("El palco no se encuentra disponible");
+	    }
+	    
+	    if (!localidad.verificadorAsociacionEvento(evento)) {
+	    		throw new Exception("La localidad no está asociada al evento ingresado por parámetro");
+	    }
+
+	    int n = localidad.getTiquetesXPalco();
+	    List<TiqueteSimple> generados = new ArrayList<>();
+
+	    for(int i=0;i<n;i++) {
+			
+			String codigo;
+			
+	    	int numero = ( int ) ( Math.random( ) * 100000000 );   
+			codigo = String.format( "%08d", numero );
+	        
+	        while( codigos.contains( codigo ) )
+	        {
+	        	int numeroe = ( int ) ( Math.random( ) * 100000000 );   
+				codigo = String.format( "%08d", numeroe );
+	        }
+	
+	        codigos.add(codigo);
+			
+			TiqueteSimple tiket = new TiqueteSimple(codigo, localidad.getPrecio(), evento.getFecha(), evento.getHora(), evento, localidad);
+			localidad.addTiquetesVendidos(tiket);
+			generados.add(tiket);
+			
+		}
+
+	    // Crea el paquete del palco con su precio propio (puede diferir de la suma)
+	    String idPaquete = generarIdPaquete();
+	    
+	    TiqueteEntradaMultipleLugar paquete = new TiqueteEntradaMultipleLugar(idPaquete, precioPropio, generados, localidad);
+
+	    evento.reservarAsientos(n);
+	    localidad.reservarPalco(idPalco);
+	    
+
+	    return paquete;
+	}
 	
 	
+	public static TiqueteEntradaMultipleEvento emitirPaseTemporada(List<Evento> eventos, Map<Evento, Integer> cantidadesPorEvento, double precioPropio) throws Exception {
+		
+	    if (eventos == null || eventos.isEmpty()) {
+	    		throw new Exception("Se deben seleccionar al menos 2 eventos");
+	    }
+	    
+	    List<TiqueteSimple> tiquetes = new ArrayList<>();
+	    List<String> idEventos = new ArrayList<>();
+
+	    for (Evento e : eventos) {
+	        int cant = cantidadesPorEvento.getOrDefault(e, 2); //se emite 2 por default
+	        List <Localidad> localidades = e.getLocalidades();
+	        boolean encontro = false;
+	        while (encontro == false) {
+		        for (Localidad loc: localidades) {
+		        		if (loc.getTipo() == "BASICA") {
+		        			LocalidadBasica local = (LocalidadBasica) loc;
+		        			if (local.getCuposDisponibles() >= cant) {
+		        				List<TiqueteSimple> tiks = generarTiqueteSimple(e, loc, cant);
+		        				for (TiqueteSimple tik: tiks) {
+		        					tiquetes.add(tik);
+		        				}
+		        				idEventos.add(e.getIdEvento());
+		        				encontro = true;
+		        			}
+		        		} else {
+		        			LocalidadNumerada local = (LocalidadNumerada) loc;
+		        			if (local.getDisponibles() >= cant) {
+		        				
+		        				int contador = cant;
+		        				List<String> seleccionados = new ArrayList<>();
+		        				
+		        				for (String asiento: local.getAsientosTotales()) {
+		        					if (!local.getAsientosOcupados().contains(asiento)) {
+		        						seleccionados.add(asiento);
+		        						contador -= 1;
+		        						if (contador == 0) {
+			        						break;
+			        					}
+		        					}
+		        				}	
+		        				if (contador == 0) {
+		        					List<TiqueteNumerado> tiks = generarTiqueteNumerado(e, loc, seleccionados);
+		        					for (TiqueteNumerado tik: tiks) {
+		        						tiquetes.add(tik);
+		        					}
+		        					idEventos.add(e.getIdEvento());
+		        					encontro = true;
+		        				}
+		        			}	
+		        		}
+		        }
+	        }
+	        if (idEventos.getLast() != e.getIdEvento()) {
+	        		throw new Exception ("El evento " + e + " no tiene dispoibilidad");
+	        }
+	    }
+	    
+	    String idPaquete = generarIdPaquete();
+        
+	    return new TiqueteEntradaMultipleEvento(idPaquete, precioPropio, tiquetes, idEventos, idEventos.size());
+	} 
+	
+	public static TiqueteDeluxe emitirDeluxe(TiqueteSimple base, List<String> beneficios, List<String> mercancia, double precioDeluxe) throws Exception {
+	    if (base == null) {
+	    		throw new Exception("Debe haber un tiquete base sobre el cual se hace el paquete Deluxe");
+	    }
+	    List<TiqueteSimple> comps = new ArrayList<>();
+	    comps.add(base);
+
+	    	String idPaquete = generarIdPaquete();
+
+        codigos.add(idPaquete);
+	    TiqueteDeluxe deluxe = new TiqueteDeluxe(idPaquete, precioDeluxe, comps, beneficios, mercancia);
+
+	    return deluxe;
+	}
+	
+	public static String generarIdPaquete () {
+		String idPaquete;
+	    
+	    int numero = ( int ) ( Math.random( ) * 100000000 );   
+		idPaquete = String.format( "%08d", numero );
+        
+        while( codigos.contains( idPaquete ) )
+        {
+        	int idPaquetee = ( int ) ( Math.random( ) * 100000000 );   
+        		idPaquete = String.format( "%08d", idPaquetee );
+        }
+
+        codigos.add(idPaquete);
+        return "P" + idPaquete;
+	}
 	
 }

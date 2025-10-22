@@ -167,7 +167,7 @@ public class Evento {
 				
 				int totalAsientos = localidadN.getAsientosTotales().size();
 				int ocupadas = localidadN.getAsientosOcupados().size();
-				int disponibles = localidadN.disponibles();
+				int disponibles = localidadN.getDisponibles();
 				
 				int [] info = {totalAsientos, ocupadas, disponibles};
 				

@@ -12,11 +12,11 @@ public class LocalidadPalco extends Localidad{
 
 	private int cantidadPalcos;
 	private int tiquetesXPalco;
-	private Map<Integer, List<Integer>> palcosDisponibles;
-	private Map<Integer, List<Integer>> palcosVendidos;
+	private Map<Integer, Integer> palcosDisponibles;
+	private Map<Integer, Integer> palcosVendidos;
 	private List<Tiquete> tiquetesVendidos;
 	
-	public LocalidadPalco(String idLocalidad, double precio, Evento eventoAsociado, String tipo, int capacidad, int cantidadPalcos, int tiquetesXPalco, Map<Integer, List<Integer>> asientos)
+	public LocalidadPalco(String idLocalidad, double precio, Evento eventoAsociado, String tipo, int capacidad, int cantidadPalcos, int tiquetesXPalco, Map<Integer, Integer> asientos)
 			throws Exception {
 		
 		super(idLocalidad, precio, eventoAsociado, tipo, capacidad);
@@ -36,9 +36,9 @@ public class LocalidadPalco extends Localidad{
 		
 		int contador = 0;
 		
-		for (List<Integer> tam: asientos.values()) {
-			contador += tam.size();
-			if (tam.size() != tiquetesXPalco) {
+		for (Integer tam: asientos.values()) {
+			contador += tam;
+			if (tam != tiquetesXPalco) {
 				throw new Exception("Los asientos de algún palco no coincide con los tiquetesXPalco");
 			} 
 		}
@@ -51,9 +51,8 @@ public class LocalidadPalco extends Localidad{
 		this.cantidadPalcos = cantidadPalcos;
 		this.tiquetesXPalco = tiquetesXPalco;
 		this.palcosDisponibles = asientos;
-		this.palcosVendidos = new HashMap<Integer, List<Integer>>();
+		this.palcosVendidos = new HashMap<Integer, Integer>();
 		this.tiquetesVendidos = new ArrayList<Tiquete>();
-
 	}
 
 	public int disponibles(){
@@ -70,7 +69,7 @@ public class LocalidadPalco extends Localidad{
 	
 	public void reservarPalco (int numeroPalco) {
 		if (disponibilidadPalco(numeroPalco)) {
-			List<Integer> asientos = palcosDisponibles.get(numeroPalco);
+			Integer asientos = palcosDisponibles.get(numeroPalco);
 			palcosVendidos.put(numeroPalco, asientos);
 			palcosDisponibles.remove(numeroPalco);
 		}
@@ -78,7 +77,7 @@ public class LocalidadPalco extends Localidad{
 	
 	public void liberarPalco (int numeroPalco) {
 		if (palcosVendidos.containsKey(numeroPalco)) {
-			List<Integer> asientos = palcosVendidos.get(numeroPalco);
+			Integer asientos = palcosVendidos.get(numeroPalco);
 			palcosDisponibles.put(numeroPalco, asientos);
 			palcosVendidos.remove(numeroPalco);
 		}
@@ -96,18 +95,17 @@ public class LocalidadPalco extends Localidad{
 		return tiquetesXPalco;
 	}
 
-	public Map<Integer, List<Integer>> getpalcosDisponibles() {
+	public Map<Integer, Integer> getpalcosDisponibles() {
 		return palcosDisponibles;
 	}
 
-	public Map<Integer, List<Integer>> getPalcosVendidos() {
+	public Map<Integer, Integer> getPalcosVendidos() {
 		return palcosVendidos;
 	}
 
 	public List<Tiquete> getTiquetesVendidos() {
 		return tiquetesVendidos;
 	}
-	
 	
 	
 	
