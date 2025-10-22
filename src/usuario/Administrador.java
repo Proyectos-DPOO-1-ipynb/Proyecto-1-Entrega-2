@@ -4,6 +4,8 @@ import java.util.List;
 
 import evento.venue.Venue;
 import usuario.comprador.Transaccion;
+
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import finanzas.EstadosFinanciero;
@@ -66,19 +68,21 @@ public class Administrador {
                 EstadosFinanciero global = GestorFinanciero.getEstadoGlobal();
                 resultado.put("tipo", "Global");
                 resultado.put("ingresosTotales", global.getIngresosTotales());
-                resultado.put("utilidadNeta", global.getUtilidadNeta());
-                resultado.put("porcentajeVenta", global.getPorcentajeVenta());
+                resultado.put("Ganancias tiquetera", global.getIngresosTiquetera());
                 break;
 
             case "EVENTO":
-                // Buscar el evento en todos los organizadores
+            	boolean encontradoEvento = false;
                 for (EstadosFinanciero estado : GestorFinanciero.getTodosEstados().values()) {
-                    if (estado.getIngresosPorEvento().containsKey(palabraFiltro)) {
+                    if (estado.getIngresosPorEventoAdmin().containsKey(palabraFiltro)) {
                         resultado.put("tipo", "Por Evento");
                         resultado.put("idEvento", palabraFiltro);
-                        resultado.put("ingresos", estado.getIngresosPorEvento().get(palabraFiltro));
+                        resultado.put("gananciaTiquetera", estado.getIngresosPorEventoAdmin().get(palabraFiltro));
+                        encontradoEvento = true;
+                    }}
+                    if (!encontradoEvento) {
+                        resultado.put("mensaje", "No se encontraron registros para el evento: " + palabraFiltro);
                     }
-                }
                 break;
 
             case "ORGANIZADOR":
@@ -86,13 +90,27 @@ public class Administrador {
                 resultado.put("tipo", "Por Organizador");
                 resultado.put("organizador", palabraFiltro);
                 resultado.put("ingresosTotales", org.getIngresosTotales());
-                resultado.put("utilidadNeta", org.getUtilidadNeta());
-                resultado.put("porcentajeVenta", org.getPorcentajeVenta());
+                resultado.put("Ganancias tiquetera", org.getIngresosTiquetera());
                 break;
 
             case "FECHA":
-                // Este caso requiere que más adelante registres fechas en GestorFinanciero o Transacción
-                resultado.put("mensaje", "Filtro por fecha aún no implementado (requiere registro de fechas por venta).");
+            	try {
+                    LocalDate fechaFiltro = LocalDate.parse(palabraFiltro); // formato "YYYY-MM-DD"
+                    boolean encontradoFecha = false;
+            	for (EstadosFinanciero estado : GestorFinanciero.getTodosEstados().values()) {
+            		if (estado.getIngresosPorFechaAdmin().containsKey(fechaFiltro)) {
+                        resultado.put("tipo", "Por Fecha");
+                        resultado.put("idEvento", palabraFiltro);
+                        resultado.put("ingresos", estado.getIngresosPorFechaAdmin().get(fechaFiltro));
+                    }
+            	}
+            	if (!encontradoFecha) {
+                    resultado.put("mensaje", "No hay registros de ventas para la fecha: " + fechaFiltro);
+                }
+
+            } catch (Exception e) {
+                resultado.put("error", "Formato de fecha inválido. Usa: YYYY-MM-DD");
+            }
                 break;
 
             default:
@@ -103,8 +121,4 @@ public class Administrador {
         return resultado;
     }
 	
-	
-	
-	
-
 }

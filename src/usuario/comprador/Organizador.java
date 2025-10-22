@@ -1,5 +1,7 @@
 package usuario.comprador;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,12 +56,26 @@ public class Organizador extends Comprador {
                 break;
 
             case "EVENTO":
-                if (miEstado.getIngresosPorEvento().containsKey(palabraFiltro)) {
+                if (miEstado.getIngresosPorEventoOrganizador().containsKey(palabraFiltro)) {
                     resultado.put("tipo", "Por Evento");
                     resultado.put("evento", palabraFiltro);
-                    resultado.put("ingresos", miEstado.getIngresosPorEvento().get(palabraFiltro));
+                    resultado.put("ingresos", miEstado.getIngresosPorEventoOrganizador().get(palabraFiltro));
                 } else {
                     resultado.put("mensaje", "No hay datos para ese evento.");
+                }
+                break;
+            case "FECHA":
+                try {
+                    LocalDate fechaFiltro =LocalDate.parse(palabraFiltro); // formato "YYYY-MM-DD"
+                    if (miEstado.getIngresosPorFechaOrganizador().containsKey(fechaFiltro)) {
+                        resultado.put("tipo", "Por Fecha");
+                        resultado.put("fecha", fechaFiltro.toString());
+                        resultado.put("ingresos", miEstado.getIngresosPorFechaOrganizador().get(fechaFiltro));
+                    } else {
+                        resultado.put("mensaje", "No se registraron ingresos para la fecha: " + fechaFiltro);
+                    }
+                } catch (Exception e) {
+                    resultado.put("error", "Formato de fecha inválido. Usa: YYYY-MM-DD");
                 }
                 break;
 

@@ -1,5 +1,6 @@
 package finanzas;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,17 +38,19 @@ public class GestorFinanciero {
         
         List<Tiquete> listaTiquetes = transaccion.getTiquetesComprados();
         for (Tiquete tiquete : listaTiquetes) {
-            precioSinRecargosTotal += tiquete.getPrecio();
+            precioSinRecargosTotal += tiquete.getPrecio();  // Para organizadorrr
         }	
         
         double gananciasTiquetera = precioTotal - precioSinRecargosTotal; // Para el Adminnnn
-
+        
+        LocalDate fechaCompra = transaccion.getFecha();
+        
         // Registrar en estado global
-        estadoGlobal.agregarVenta(evento.getIdEvento(), precioTotal, precioSinRecargosTotal, gananciasTiquetera);
+        estadoGlobal.agregarVenta(evento.getIdEvento(), precioTotal, precioSinRecargosTotal, gananciasTiquetera, fechaCompra);
 
         // Registrar por organizador
         EstadosFinanciero estadoOrg = estadosOrganizadores.computeIfAbsent(idOrganizador, k -> new EstadosFinanciero());
-        estadoOrg.agregarVenta(evento.getIdEvento(), precioTotal, precioSinRecargosTotal, gananciasTiquetera);
+        estadoOrg.agregarVenta(evento.getIdEvento(), precioTotal, precioSinRecargosTotal, gananciasTiquetera,fechaCompra);
     }
 
     /**
