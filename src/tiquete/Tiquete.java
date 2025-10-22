@@ -28,4 +28,8 @@ public abstract class Tiquete {
 		return base + cargoServicio + costoEmisionFijo;
 	}
 	
+	public double getPrecio() {
+		return this.precio;
+	}
+	
 }
