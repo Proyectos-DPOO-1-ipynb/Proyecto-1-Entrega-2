@@ -24,6 +24,5 @@ public class Comprador extends Usuario {
 		this.transaccionesRealizadas = new ArrayList<Transaccion>();
 		this.historicoTiquetes = new ArrayList<Tiquete>();
 	}
-	
-	
+
 }
