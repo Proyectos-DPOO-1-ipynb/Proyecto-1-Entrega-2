@@ -16,4 +16,7 @@ public class Transferencia extends Transaccion{
 		super(fecha, tipoPago, montoTotal, usuario, evento, tiquetesComprados);
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	
 }

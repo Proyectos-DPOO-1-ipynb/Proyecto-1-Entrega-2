@@ -1,6 +1,5 @@
 package tiquete;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TiqueteEntradaMultipleEvento extends TiqueteCompuesto{
@@ -15,8 +14,18 @@ public class TiqueteEntradaMultipleEvento extends TiqueteCompuesto{
 		this.idEventos = idEventos;
 		this.cantidadEventos = cantidadEventos;
 	}
-	
 
+
+	public List<String> getIdEventos() {
+		return idEventos;
+	}
+
+
+	public int getCantidadEventos() {
+		return cantidadEventos;
+	}
+	
+	
 	
 	
 }

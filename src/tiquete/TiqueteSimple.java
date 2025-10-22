@@ -1,11 +1,9 @@
 package tiquete;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import evento.Evento;
 import evento.venue.Localidad;
-import tiquete.TiqueteCompuesto;
 
 public class TiqueteSimple extends Tiquete {
 	

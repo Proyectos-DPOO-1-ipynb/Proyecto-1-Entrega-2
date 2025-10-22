@@ -1,7 +1,6 @@
 package tiquete;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import evento.Evento;
@@ -23,5 +22,15 @@ public class TiqueteDeluxe extends TiqueteSimple{
 	public boolean esTransferible() {
 	    return false; // Bloqueo de transferencia para paquetes Deluxe
 	}
+
+	public List<Object> getBeneficios() {
+		return beneficios;
+	}
+
+	public List<Object> getMercancia() {
+		return mercancia;
+	}
+	
+	
 	
 }

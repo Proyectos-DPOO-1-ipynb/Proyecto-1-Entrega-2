@@ -1,7 +1,6 @@
 package tiquete;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import evento.Evento;
 import evento.venue.Localidad;
@@ -16,8 +15,10 @@ public class TiqueteNumerado extends TiqueteSimple {
 		super(idTiquete, precio, fecha, hora, eventoAsociado, localidadTiquete);
 		this.idAsiento = idAsiento;
 	}
-	
-	
+
+	public String getIdAsiento() {
+		return idAsiento;
+	}
 	
 		
 }

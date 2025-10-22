@@ -5,12 +5,16 @@ import java.util.List;
 import evento.venue.Localidad;
 
 public class TiqueteEntradaMultipleLugar extends TiqueteCompuesto {
-
-	private Localidad idLugar;
 	
-	public TiqueteEntradaMultipleLugar(String idTiquete, double precio, List<TiqueteSimple> tiquetes, Localidad idLugar) {
+	private Localidad idLocalidad;
+	public TiqueteEntradaMultipleLugar(String idTiquete, double precio, List<TiqueteSimple> tiquetes, Localidad idLocalidad) {
 		super(idTiquete, precio, tiquetes);
-		this.idLugar = idLugar;
+		this.idLocalidad = idLocalidad;
 	}
+	
+	public Localidad getIdLocalidad() {
+		return idLocalidad;
+	}
+
 	
 }
