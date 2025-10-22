@@ -1,5 +1,6 @@
 package finanzas;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,8 +15,13 @@ public class EstadosFinanciero {
     private double utilidadNeta;            // Ganancia neta del organizador o del sistema
     private int tiquetesVendidos;
     private int tiquetesDisponibles;
+ // 🔹 Mapas para organizador
+    private Map<String, Double> ingresosPorEventoOrganizador = new HashMap<>();
+    private Map<LocalDate, Double> ingresosPorFechaOrganizador = new HashMap<>();
 
-    private Map<String, Double> ingresosPorEvento = new HashMap<>();
+    // 🔹 Mapas para administrador
+    private Map<String, Double> ingresosPorEventoAdmin = new HashMap<>();
+    private Map<LocalDate, Double> ingresosPorFechaAdmin = new HashMap<>();
 
     /**
      * Registra una venta (llamado desde GestorFinanciero).
@@ -25,15 +31,32 @@ public class EstadosFinanciero {
      * @param precioSinRecargos precio base sin recargos (para el organizador)
      * @param gananciaTiquetera diferencia que gana la plataforma
      */
-    public void agregarVenta(String idEvento, double precioTotal, double precioSinRecargos, double gananciaTiquetera) {
+    public void agregarVenta(String idEvento, double precioTotal, double precioSinRecargos, double gananciaTiquetera, LocalDate fecha) {
         ingresosTotales += precioSinRecargos;
         ingresosTiquetera += gananciaTiquetera;
         ingresosTotalesCompletos += precioTotal;
-        utilidadNeta = ingresosTotales - ingresosTiquetera; // simplificado, puedes ajustar la fórmula
-
+        utilidadNeta = ingresosTotales - ingresosTiquetera; // quitar? es lo mismo que precioSinRecargos
         tiquetesVendidos++;
-        ingresosPorEvento.put(idEvento,
-            ingresosPorEvento.getOrDefault(idEvento, 0.0) + precioSinRecargos);
+        
+     // --- Para el organizador ---
+        ingresosPorEventoOrganizador.put(
+            idEvento,
+            ingresosPorEventoOrganizador.getOrDefault(idEvento, 0.0) + precioSinRecargos
+        );
+        ingresosPorFechaOrganizador.put(
+            fecha,
+            ingresosPorFechaOrganizador.getOrDefault(fecha, 0.0) + precioSinRecargos
+        );
+
+        // --- Para el administrador (tiquetera) ---
+        ingresosPorEventoAdmin.put(
+            idEvento,
+            ingresosPorEventoAdmin.getOrDefault(idEvento, 0.0) + gananciaTiquetera
+        );
+        ingresosPorFechaAdmin.put(
+            fecha,
+            ingresosPorFechaAdmin.getOrDefault(fecha, 0.0) + gananciaTiquetera
+        );
     }
 
     public void setTiquetesDisponibles(int disponibles) {
@@ -71,7 +94,22 @@ public class EstadosFinanciero {
         return tiquetesDisponibles;
     }
 
-    public Map<String, Double> getIngresosPorEvento() {
-        return ingresosPorEvento;
+    public Map<String, Double> getIngresosPorEventoOrganizador() {
+        return ingresosPorEventoOrganizador;
     }
+
+    public Map<LocalDate, Double> getIngresosPorFechaOrganizador() {
+        return ingresosPorFechaOrganizador;
+    }
+
+    // --- Getters para filtrado por administrador ---
+    public Map<String, Double> getIngresosPorEventoAdmin() {
+        return ingresosPorEventoAdmin;
+    }
+
+    public Map<LocalDate, Double> getIngresosPorFechaAdmin() {
+        return ingresosPorFechaAdmin;
+        
+    }
+    
 }
