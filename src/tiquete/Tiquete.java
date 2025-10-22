@@ -38,8 +38,4 @@ public abstract class Tiquete {
 	}
 
 	
-	public double getPrecio() {
-		return this.precio;
-	}
-	
 }
