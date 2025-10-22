@@ -17,7 +17,6 @@ public class Venue {
 	
 	private List<Evento> eventosAsociados = new ArrayList<>();
 	
-	
 	private static List<Venue> VenuesAprobados = new ArrayList<>(); 
 	private static List<Venue> VenuesPendientes = new ArrayList<>();
 	
@@ -28,8 +27,6 @@ public class Venue {
 		if (maxCapacidad <= 0) {
 			throw new Exception("La capacidad no puede ser negativa ni nula");
 		}
-
-		
 		this.VenueId = VenueId;
 		this.direccion = direccion;
 		this.maxCapacidad = maxCapacidad;
@@ -79,9 +76,7 @@ public class Venue {
 	public void cambiarEstadoAprobado() throws Exception {
 		
 		if(this.estado == true) {
-			
 			throw new Exception("YUa se encuentra aprobado");
-			
 		}
 		
 		this.estado = true;
@@ -90,67 +85,48 @@ public class Venue {
 	}
 	
 	
-	
 	public void addPropuestaVenue() throws Exception {
 		
 		if(this.estado == true) {
 			throw new Exception("Ya fue aprobado! No hay necesidad de proponerlo otra vez");
-			
 		}
 		
 		if(VenuesPendientes.contains(this)) {
-			
 			throw new Exception("Ya está siendo considerado este venue para su aprobación");
-		
 			
 		}
 		
 		VenuesPendientes.add(this);
-		 
 	}
 	
 	
 	public boolean buscarDisponibilidad(LocalDate fecha) {
 		
-		
 		boolean verificador = true;
 		
-		for(Evento evento : this.eventosAsociados) {
-			
-			
+		for(Evento evento : this.eventosAsociados) {	
 			if(evento.getFecha().isEqual(fecha)) {
-				
 				verificador = false;
-					
 			} 	
 		}
 		
 		return verificador;
 
-		
 	}
 	
 	
 	public void addEventotoVenue(Evento evento) throws Exception {
 		
 		if(!evento.getVenueAsignado().getVenueId().equals(this.getVenueId())) {
-		
-			throw new Exception("Estás tratando de formalizar un venue que no corresponde al borrador de este evento");
-			
+			throw new Exception("Estás tratando de formalizar un venue que no corresponde al borrador de este evento");			
 		}
 		
 		if(eventosAsociados.contains(evento)) {
 			throw new Exception("El evento ya está registrado en este venue");
-			
 		}
-		
 		
 		this.eventosAsociados.add(evento);
 		
-		
-		
 	}
-	
-	
 	
 }

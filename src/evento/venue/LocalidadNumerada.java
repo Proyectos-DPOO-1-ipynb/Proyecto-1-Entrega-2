@@ -12,13 +12,13 @@ public class LocalidadNumerada extends Localidad {
 	
 	
 	private List<String> asientosTotales; //Cada asiento es un idAsiento str
-	private List<String> asientosOcupados = new ArrayList<>();
-	private List<Tiquete> tiquetes = new ArrayList<>();
+	private List<String> asientosOcupados;
+	private List<Tiquete> tiquetesVendidos;
 
 	
-	public LocalidadNumerada(String idLocalidad, double precio, Evento eventoAsociado, List<String> asientos) throws Exception {
+	public LocalidadNumerada(String idLocalidad, double precio, Evento eventoAsociado, List<String> asientos, int capacidad) throws Exception {
 		
-		super(idLocalidad, precio, eventoAsociado, "NUMERADA");
+		super(idLocalidad, precio, eventoAsociado, "NUMERADA", capacidad);
 		
 		if(asientos == null) {
 			throw new Exception("Inserte bien la lista de asientos");
@@ -28,10 +28,17 @@ public class LocalidadNumerada extends Localidad {
 			throw new Exception("No puede tener un catálogo de asientos vacío");
 		}
 		
+		if(asientos.size() != capacidad) {
+			throw new Exception ("La cantidad de asientos no concuerdad con la cantidad ingresada");
+		}
+		
 		this.asientosTotales = asientos;
+		this.asientosOcupados = new ArrayList<>();
+		this.tiquetesVendidos = new ArrayList<>();
+		
 	}
 	
-	public int disponibles() {
+	public int getDisponibles() {
 		return this.asientosTotales.size() - this.asientosOcupados.size();
 	}
 	
@@ -39,12 +46,12 @@ public class LocalidadNumerada extends Localidad {
 		if(!this.asientosTotales.contains(asiento)) {
 			throw new Exception("Este asiento " + asiento + "no se encuentra en esta localidad");
 		}
-		
 		if(this.asientosOcupados.contains(asiento)) {
 			return false;
 		} else {
 			return true;
 		}	
+		
 	}
 	
 	
@@ -53,11 +60,9 @@ public class LocalidadNumerada extends Localidad {
 		if(!this.asientosTotales.contains(asiento)) {		
 			throw new Exception("Este asiento no se encuentra en esta localidad");
 		}
-		
 		if (this.asientoLibre(asiento) != true) {
 			throw new Exception("El asiento ya se encuentra ocupado");
 		}
-		
 		this.asientosOcupados.add(asiento);
 		
 	}
@@ -67,23 +72,24 @@ public class LocalidadNumerada extends Localidad {
 		if(!this.asientosTotales.contains(asiento)) {
 			throw new Exception("Este asiento no se encuentra en esta localidad");	
 		}
-		
 		if(this.asientoLibre(asiento) == true) {	
 			throw new Exception("El asiento no está ocupado");
 		}
-		
 		this.asientosOcupados.remove(asiento);
 		
 	}
 	
 	public void reservarAsientos(List<String> asientos) throws Exception {
-		
 		for(String silla:asientos) { 
 			this.ocuparAsiento(silla);
 		}
-		
 	}
 
+	public void addTiquetesVendidos(TiqueteNumerado tiquete) {
+		this.tiquetesVendidos.add(tiquete);	
+	}
+	
+	
 	public List<String> getAsientosTotales() {
 		return asientosTotales;
 	}
@@ -91,11 +97,6 @@ public class LocalidadNumerada extends Localidad {
 
 	public List<String> getAsientosOcupados() {
 		return asientosOcupados;
-	}
-
-
-	public void addTiqueteNumerado(TiqueteNumerado tiquete) {
-		this.tiquetes.add(tiquete);	
 	}
 	
 }

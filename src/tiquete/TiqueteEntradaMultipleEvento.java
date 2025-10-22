@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TiqueteEntradaMultipleEvento extends TiqueteCompuesto{
 
-	private List<String> idEventos = new ArrayList<>();
+	private List<String> idEventos;
 	private int cantidadEventos = idEventos.size();
 	
 	

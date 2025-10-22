@@ -36,6 +36,22 @@ public class TiqueteSimple extends Tiquete {
 	public void agregarATiqueteCompuesto(TiqueteCompuesto paqueteAsociado) {
 	    this.paqueteAsociado = paqueteAsociado;
 	}
+
+	public LocalDate getFecha() {
+		return fecha;
+	}
+
+	public int getHora() {
+		return hora;
+	}
+
+	public Evento getEventoAsociado() {
+		return eventoAsociado;
+	}
+
+	public Localidad getLocalidadTiquete() {
+		return localidadTiquete;
+	}
 	
 	
 }

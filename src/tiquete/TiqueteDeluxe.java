@@ -1,21 +1,27 @@
 package tiquete;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TiqueteDeluxe extends TiqueteCompuesto{
+import evento.Evento;
+import evento.venue.Localidad;
 
-	private List<String> beneficios = new ArrayList<>();
-	private List<String> mercancia = new ArrayList<>();
+public class TiqueteDeluxe extends TiqueteSimple{
+
+	private List<Object> beneficios;
+	private List<Object> mercancia;
 	
 	
-	public TiqueteDeluxe(String idTiquete, double precio, List<TiqueteSimple> tiquetes, List<String> beneficios,
-			List<String> mercancia) {
-		super(idTiquete, precio, tiquetes);
+	public TiqueteDeluxe(String idTiquete, double precio, LocalDate fecha, int hora, Evento eventoAsociado,
+			Localidad localidadTiquete, List<Object> beneficios, List<Object> mercancia) {
+		super(idTiquete, precio, fecha, hora, eventoAsociado, localidadTiquete);
 		this.beneficios = beneficios;
 		this.mercancia = mercancia;
 	}
 
-	
+	public boolean esTransferible() {
+	    return false; // Bloqueo de transferencia para paquetes Deluxe
+	}
 	
 }

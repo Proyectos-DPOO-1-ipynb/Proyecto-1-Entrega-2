@@ -48,10 +48,8 @@ public class GestorEventos {
 	}
 	
 	
-	
-	
 	public static String crearBorradorEvento(Organizador organizador, String tipo, String idEvento, Venue venue, 
-			LocalDate fecha, int hora) throws Exception {
+			LocalDate fecha, int hora, int capacidadEvento) throws Exception {
 		
 		if(venue.getEstado() != true) {
 			throw new Exception("El Venue no ha sido aprobado. Busque otro o contacte al Administrador");
@@ -62,7 +60,7 @@ public class GestorEventos {
 		}
 		
 		
-		Evento eventoNuevo = new Evento(tipo, fecha, hora, idEvento, venue, organizador);
+		Evento eventoNuevo = new Evento(tipo, fecha, hora, idEvento, venue, organizador, capacidadEvento);
 		eventoNuevo.addEventoBorrador();
 		
 		return "Se ha creado el siguiente evento en borrador:" + eventoNuevo.getIdEvento();
@@ -72,20 +70,30 @@ public class GestorEventos {
 	
 	public static String asociarLocalidadBasica(String idLocalidad, double precio, Evento eventoAsociado, int capacidad) throws Exception {
 		
-		LocalidadBasica localidadprop = new LocalidadBasica(idLocalidad, precio, eventoAsociado, capacidad);
-		eventoAsociado.agregarLocalidad(localidadprop);
-		return "La localidad con id: " + localidadprop.getIdLocalidad() + " fue añadida al evento con id " + eventoAsociado.getIdEvento();
+		int capacidadLocs = verificarAgregarLocalidad(eventoAsociado, capacidad);
+		
+		if (capacidadLocs > 0) {
+			LocalidadBasica localidadprop = new LocalidadBasica(idLocalidad, precio, eventoAsociado, capacidad);
+			eventoAsociado.agregarLocalidad(localidadprop);
+			return "La localidad con id: " + localidadprop.getIdLocalidad() + " fue añadida al evento con id " + eventoAsociado.getIdEvento();
+		} else {
+			throw new Exception("La localidad que se intenta asociar debe tener " + Math.abs(capacidadLocs) + " cupos o menos");
+		}
 	}
 	
 
 	
-	public static String asociarLocalidadNumerada(String idLocalidad, double precio, Evento eventoAsociado, List<String> asientos) throws Exception {
+	public static String asociarLocalidadNumerada(String idLocalidad, double precio, Evento eventoAsociado, List<String> asientos, int capacidad) throws Exception {
 		
-		LocalidadNumerada localidadprop = new LocalidadNumerada(idLocalidad, precio, eventoAsociado, asientos);
-			
-		eventoAsociado.agregarLocalidad(localidadprop);
-				
-		return "La localidad con id: " + localidadprop.getIdLocalidad() + " fue añadida al evento con id " + eventoAsociado.getIdEvento();
+		int capacidadLocs = verificarAgregarLocalidad(eventoAsociado, capacidad);
+		
+		if (capacidadLocs > 0) {
+			LocalidadNumerada localidadprop = new LocalidadNumerada(idLocalidad, precio, eventoAsociado, asientos, capacidad);
+			eventoAsociado.agregarLocalidad(localidadprop);	
+			return "La localidad con id: " + localidadprop.getIdLocalidad() + " fue añadida al evento con id " + eventoAsociado.getIdEvento();
+		} else {
+			throw new Exception("La localidad que se intenta asociar debe tener " + Math.abs(capacidadLocs) + " cupos o menos");
+		}
 	}
 	
 	
@@ -155,6 +163,28 @@ public class GestorEventos {
 			return "El evento no ha sido publicado, pues ha fallado la validación";
 		}
 	}	
+
+	public static int verificarAgregarLocalidad(Evento evento, int capacidad) {
+		
+		List<Localidad> locs = evento.getLocalidades();
+		int totales = evento.getTiquetesMax();
+		totales -= capacidad;
+		
+		if (!locs.isEmpty()) { //verifica que no haya mas cupo en localidades que en la totalidad del evento
+			for (Localidad loc: locs) {
+				if (loc.getTipo().equals("BASICA")) {
+					LocalidadBasica locb = (LocalidadBasica) loc;
+					totales -= locb.getCuposTotales();
+				} else {
+					LocalidadNumerada locn = (LocalidadNumerada) loc;
+					totales -= locn.getAsientosTotales().size();
+				}
+			}
+			return totales;
+		} else {
+			return totales;
+		}
+	}
 		
 }
 		

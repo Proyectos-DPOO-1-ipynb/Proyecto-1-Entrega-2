@@ -28,17 +28,18 @@ public class Evento {
 	
 	private String Estado;
 	
-	private List<Localidad> localidades = new ArrayList<>();
+	private List<Localidad> localidades;
 	
-	private List<Transaccion> comprasRealizadas = new ArrayList<>();
-	private List<Tiquete> tiquetesMax = new ArrayList<>();
+	private List<Transaccion> comprasRealizadas;
+	private int tiquetesMax;
+	private int disponibles;
 	
 	
 	private static List<Evento> eventosBorrador = new ArrayList<>();
 	private static List<Evento> eventosPublicados = new ArrayList<>();
 	
 	
-	public Evento(String tipo, LocalDate fecha, int hora, String idEvento, Venue venueAsignado, Organizador organizadorAsignado) {
+	public Evento(String tipo, LocalDate fecha, int hora, String idEvento, Venue venueAsignado, Organizador organizadorAsignado, int capacidadEvento) {
 		
 		this.tipo = tipo;
 		this.fecha = fecha;
@@ -47,8 +48,17 @@ public class Evento {
 		this.venueAsignado = venueAsignado;
 		this.organizadorAsignado = organizadorAsignado;
 		this.Estado = "BORRADOR";
+		
+		this.localidades = new ArrayList<>();
+		this.comprasRealizadas = new ArrayList<>();
+		this.tiquetesMax = capacidadEvento;
+		this.disponibles = capacidadEvento;
+		
+	}
 
 
+	public int getTiquetesMax() {
+		return tiquetesMax;
 	}
 
 
@@ -61,9 +71,6 @@ public class Evento {
 		return idEvento;
 	}
 	
-	
-	
-
 
 	public String getEstado() {
 		return Estado;
@@ -93,9 +100,7 @@ public class Evento {
 	public void addEventoBorrador() throws Exception {
 		
 		if(eventosBorrador.contains(this)) {
-			
 			throw new Exception("Ya este evento está en borrador");
-			
 		}
 		eventosBorrador.add(this);
 		
@@ -105,16 +110,12 @@ public class Evento {
 	
 	public void agregarLocalidad(Localidad localidad) throws Exception {
 		
-		
 		String idlocal = localidad.getIdLocalidad();
 		
 		for(Localidad localidads:this.localidades) {
-			
 			if(idlocal.equals(localidads.getIdLocalidad())) {
-			
 			throw new Exception("Ese id ya está registrado. Pruebe otro");
-			
-		}
+			}
 		}
 		
 		this.localidades.add(localidad);	
@@ -122,9 +123,7 @@ public class Evento {
 	
 	
 	public void removerLocalidad(Localidad localidad) {
-		
 		this.localidades.remove(localidad);
-		
 	}
 	
 	
@@ -132,14 +131,8 @@ public class Evento {
 		
 		
 		if (eventosPublicados.contains(this)) {
-			
-			throw new Exception("Este evento ya fue publicado");
-			
+			throw new Exception("Este evento ya fue publicado");	
 		} 
-		
-		
-		
-		
 		
 		this.getVenueAsignado().addEventotoVenue(this);
 		
@@ -174,7 +167,7 @@ public class Evento {
 				
 				int totalAsientos = localidadN.getAsientosTotales().size();
 				int ocupadas = localidadN.getAsientosOcupados().size();
-				int disponibles = localidadN.disponibles();
+				int disponibles = localidadN.getDisponibles();
 				
 				int [] info = {totalAsientos, ocupadas, disponibles};
 				
@@ -183,7 +176,6 @@ public class Evento {
 			
 		}
 		
-		
 		List<Map<String, Object>> resumen = new ArrayList<>();
 		
 		resumen.add(localidadesNumeradas);
@@ -191,26 +183,25 @@ public class Evento {
 		
 		return resumen;
 		
-		
-		
-		
 	}
 	
-	public void addTiqueteSimple(TiqueteSimple tiquete) {
-		
-		this.tiquetesMax.add(tiquete);
-		
-		
+
+	
+	public void reservarAsientos(int reservados) {
+		this.disponibles -= reservados;
 	}
-	
-	
-	public void addTiqueteNumerado(TiqueteNumerado tiquete) {
-		
-		this.tiquetesMax.add(tiquete);
+
+	public int getDisponibles() {
+		return disponibles;
 	}
 	
 	
-	public String getTipo() { return tipo; }
-	public Organizador getOrganizadorAsignado() { return organizadorAsignado; }
+	public String getTipo() { 
+		return tipo; 
+	}
+	
+	public Organizador getOrganizadorAsignado() { 
+		return organizadorAsignado; 
+	}
 
 }

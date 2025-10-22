@@ -10,4 +10,6 @@ public class Cliente extends Comprador {
 	
 	private List<Evento> eventosAsociados;
 	
+	// Alejoo
+	
 }
