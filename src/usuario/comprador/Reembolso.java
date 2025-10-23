@@ -11,9 +11,9 @@ public class Reembolso extends Transaccion {
 	private String estado;
 	private double cantidad;
 	
-	public Reembolso(LocalDate fecha, String tipoPago, double montoTotal, Comprador usuario, Evento evento,
+	public Reembolso(LocalDate fecha, String tipoPago, double montoTotal, Comprador usuario, List<Evento> eventos,
 			List<Tiquete> tiquetesComprados) {
-		super(fecha, tipoPago, montoTotal, usuario, evento, tiquetesComprados);
+		super(fecha, tipoPago, montoTotal, usuario, eventos, tiquetesComprados);
 		// TODO Auto-generated constructor stub
 	}
 	

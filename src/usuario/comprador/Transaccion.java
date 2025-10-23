@@ -1,11 +1,13 @@
 package usuario.comprador;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import evento.Evento;
 import finanzas.GestorFinanciero;
 import tiquete.Tiquete;
+import java.util.UUID;
 
 public class Transaccion {
 
@@ -14,20 +16,26 @@ public class Transaccion {
 	private double montoTotal;
 	
 	private Comprador usuario;
-    private Evento evento;        
+    private List<Evento> eventos;        
 	private List<Tiquete> tiquetesComprados;
 	
-	public Transaccion(LocalDate fecha, String tipoPago, double montoTotal,
-            Comprador usuario, Evento evento, List<Tiquete> tiquetesComprados) {
+	protected String idTransaccion;
+	protected LocalDateTime fechaHora;
+	
+	public Transaccion(LocalDate fecha, String tipoPago, double montoTotal, Comprador usuario, List<Evento> eventos, List<Tiquete> tiquetesComprados) {
 		this.fecha = fecha;
 		this.tipoPago = tipoPago;
 		this.montoTotal = montoTotal;
 		this.usuario = usuario;
-		this.evento = evento;
+		this.eventos = eventos;
 		this.tiquetesComprados = tiquetesComprados;
 		GestorFinanciero.registrarTransaccion(this);
 	}
-
+	
+	protected static String generarIdTx() { 
+		return UUID.randomUUID().toString();
+	}
+	
 	public LocalDate getFecha() {
 		return fecha;
 	}
@@ -44,8 +52,8 @@ public class Transaccion {
 		return usuario;
 	}
 
-	public Evento getEvento() {
-		return evento;
+	public List<Evento> getEventos() {
+		return eventos;
 	}
 
 	public List<Tiquete> getTiquetesComprados() {

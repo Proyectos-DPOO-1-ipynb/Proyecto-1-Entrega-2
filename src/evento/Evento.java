@@ -203,5 +203,10 @@ public class Evento {
 	public Organizador getOrganizadorAsignado() { 
 		return organizadorAsignado; 
 	}
+	
+	public void liberarCupos(int n) {                  
+	    if (n <= 0) return;
+	    this.disponibles = this.disponibles + n;
+	}
 
 }

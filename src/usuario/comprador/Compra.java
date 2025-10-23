@@ -9,11 +9,10 @@ import tiquete.Tiquete;
 public class Compra extends Transaccion {
 	
 	private double total;
-	private String medioPago;
 	
-	public Compra(LocalDate fecha, String tipoPago, double montoTotal, Comprador usuario, Evento evento,
+	public Compra(LocalDate fecha, String tipoPago, double montoTotal, Comprador usuario, List<Evento> eventos,
 			List<Tiquete> tiquetesComprados) {
-		super(fecha, tipoPago, montoTotal, usuario, evento, tiquetesComprados);
+		super(fecha, tipoPago, montoTotal, usuario, eventos, tiquetesComprados);
 		// TODO Auto-generated constructor stub
 	}
 	

@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import evento.Evento;
 import tiquete.Tiquete;
 import usuario.Usuario;
 
@@ -23,5 +22,38 @@ public class Comprador extends Usuario {
 		this.saldoVirtual = 0;
 		this.transaccionesRealizadas = new ArrayList<Transaccion>();
 		this.historicoTiquetes = new ArrayList<Tiquete>();
+	}
+
+	public int getSaldoVirtual() {
+		return saldoVirtual;
+	}
+
+	public List<Transaccion> getTransaccionesRealizadas() {
+		return transaccionesRealizadas;
+	}
+
+	public List<Tiquete> getHistoricoTiquetes() {
+		return historicoTiquetes;
+	}
+	
+	public void abonarSaldo(int monto) {     
+	    if (monto < 0) throw new IllegalArgumentException("Monto negativo");
+	    this.saldoVirtual += monto;
+	}
+	
+	public void debitarSaldo(int monto) {          
+	    if (monto < 0) throw new IllegalArgumentException("Monto negativo");
+	    if (this.saldoVirtual < monto) throw new IllegalStateException("Saldo insuficiente");
+	    this.saldoVirtual -= monto;
+	}
+	
+	public void agregarTransaccion(Transaccion t) { 
+	    if (t == null) return;
+	    this.transaccionesRealizadas.add(t);
+	}
+	
+	public void agregarTiquete(Tiquete t) {
+	    if (t == null) return;
+	    this.historicoTiquetes.add(t);
 	}
 }

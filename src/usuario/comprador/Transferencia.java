@@ -11,9 +11,9 @@ public class Transferencia extends Transaccion{
 	private Comprador emisor;
 	private Comprador receptor;
 	
-	public Transferencia(LocalDate fecha, String tipoPago, double montoTotal, Comprador usuario, Evento evento,
+	public Transferencia(LocalDate fecha, String tipoPago, double montoTotal, Comprador usuario, List<Evento> eventos,
 			List<Tiquete> tiquetesComprados) {
-		super(fecha, tipoPago, montoTotal, usuario, evento, tiquetesComprados);
+		super(fecha, tipoPago, montoTotal, usuario, eventos, tiquetesComprados);
 		// TODO Auto-generated constructor stub
 	}
 	
